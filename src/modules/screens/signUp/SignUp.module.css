@@ -1,0 +1,43 @@
+.container {
+  width: 80%;
+  height: 70%;
+  position: absolute;
+  left: 10%;
+  top: 15%;
+  background-color: #ffdb58;
+}
+
+.content {
+  width: 50%;
+  height: 120%;
+  padding: 4% 5%;
+  transform: translate(5%, -8%);
+  background-color: white;
+  box-shadow: 0 4px 8px 0 gray;
+}
+
+.title {
+  text-align: center;
+  font-size: 1.8rem;
+}
+
+.button {
+  margin-top: 2%;
+}
+
+.signInText {
+  margin-top: 2%;
+  float: right;
+}
+
+.signInLink {
+  color: orange;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.logo {
+  font-size: 4rem;
+  font-weight: bold;
+  transform: translate(120%, -110%);
+}
