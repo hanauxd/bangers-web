@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import { Home, Auth } from './screens';
+import { Home, SignIn, SignUp } from './screens';
+import { authSuccess } from './store/actions/auth';
 
-import styles from './Root.css';
+import styles from './Root.module.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
-import { authSuccess } from './store/actions/auth';
 
 const Root = props => {
   useEffect(() => {
@@ -26,8 +26,11 @@ const Root = props => {
           <Route exact path='/'>
             <Home />
           </Route>
-          <Route exact path='/auth'>
-            <Auth />
+          <Route exact path='/login'>
+            <SignIn />
+          </Route>
+          <Route exact path='/register'>
+            <SignUp />
           </Route>
         </Switch>
       </Router>

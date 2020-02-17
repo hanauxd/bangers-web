@@ -7,3 +7,11 @@ export const onSignIn = values => {
   }
   return post(endpoint, body);
 }
+
+export const onSignUp = values => {
+  const endpoint = 'register';
+  const body = {
+    ...values
+  }
+  return post(endpoint, body)
+}

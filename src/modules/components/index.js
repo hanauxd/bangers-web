@@ -1,1 +1,1 @@
-export { default as SignIn } from './signIn/SignIn';
+export { default as InputField } from './inputField/InputField';
