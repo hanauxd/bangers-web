@@ -1,1 +1,3 @@
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
+
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';

@@ -1,14 +1,14 @@
 .container {
   width: 80%;
-  height: 70%;
+  height: 60%;
   position: absolute;
   left: 10%;
-  top: 15%;
+  top: 22%;
   background-color: #ffdb58;
 }
 
 .content {
-  width: 50%;
+  width: 45%;
   height: 120%;
   padding: 4% 5%;
   transform: translate(5%, -8%);
@@ -39,5 +39,5 @@
 .logo {
   font-size: 4rem;
   font-weight: bold;
-  transform: translate(120%, -110%);
+  transform: translate(120%, -130%);
 }
