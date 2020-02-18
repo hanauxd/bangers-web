@@ -14,3 +14,29 @@ export const post = (endpoint, body, token = null) => {
     }
   })
 }
+
+export const get = (endpoint, token = null) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const result = await axios.get(`${BASE_URL}${endpoint}`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      resolve(result.data);
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+export const put = (endpoint, body, token = null) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const result = await axios.put(`${BASE_URL}${endpoint}`, body, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      resolve(result.data);
+    } catch (error) {
+      reject(error)
+    }
+  })
+}

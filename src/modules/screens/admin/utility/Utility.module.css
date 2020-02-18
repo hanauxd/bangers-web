@@ -1,0 +1,20 @@
+.container {
+  width: 90%;
+  display: flex;
+  margin: 5% auto;
+}
+
+.addUtility {
+  width: 30%;
+  height: fit-content;
+  padding: 3%;
+  box-shadow: 0 4px 8px 0 gray;
+}
+
+.utilityItems {
+  width: 70%;
+  padding: 0 2%;
+  display: flex;
+  flex-flow: wrap row;
+  justify-content: flex-start;
+}
