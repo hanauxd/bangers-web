@@ -2,8 +2,8 @@ import React from 'react';
 
 const Home = props => {
   return (
-    <div>
-      HOME
+    <div style={{ padding: '10%' }}>
+      HOME SCREEN
     </div>
   )
 }
