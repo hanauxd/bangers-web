@@ -3,9 +3,9 @@ import { MDBInput } from 'mdbreact';
 import { ErrorMessage } from 'formik';
 
 const InputField = props => {
-  const { label, icon, name, type, values, onChange, onBlur } = props;
+  const { styleClass, label, icon, name, type, values, onChange, onBlur } = props;
   return (
-    <div>
+    <div style={styleClass}>
       <MDBInput
         type={type}
         name={name}

@@ -1,11 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 const Home = props => {
   return (
-    <div style={{ padding: '10%' }}>
-      HOME SCREEN
+    <div style={{ padding: '2%' }}>
+      HOME
     </div>
   )
 }
 
-export default Home;
+const mapStateToProps = state => {
+  return {
+    auth: state.auth.auth
+  }
+}
+
+export default connect(mapStateToProps)(Home);

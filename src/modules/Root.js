@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import { Auth, Toolbar } from './components';
+import { Auth, Toolbar, VehicleDetails } from './components';
 import { Home, SignIn, SignUp, Utility, Vehicle } from './screens';
 import { authSuccess } from './store/actions/auth';
 
@@ -40,6 +40,9 @@ const Root = props => {
           </Route>
           <Route exact path='/admin/utility'>
             <Auth component={Utility} auth={props.auth} role="ROLE_ADMIN" />
+          </Route>
+          <Route exact path='/vehicles/:id'>
+            <Auth component={VehicleDetails} auth={props.auth} role="ROLE_ADMIN" />
           </Route>
         </Switch>
       </Router>
