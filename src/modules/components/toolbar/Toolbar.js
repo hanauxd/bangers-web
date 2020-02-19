@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
   MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink,
@@ -7,7 +8,6 @@ import {
 } from "mdbreact";
 
 import { useCustomState } from './../../helpers/hooks';
-import { connect } from 'react-redux';
 import { logoutSuccess } from "../../store/actions/auth";
 
 import styles from './Toolbar.module.css';
