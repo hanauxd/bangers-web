@@ -1,0 +1,20 @@
+.container {
+  margin: 0 2% 2%;
+  width: 22rem;
+  height: max-content;
+  padding: 1%;
+  box-shadow: 0 4px 8px 0 gray;
+}
+
+.image__div {
+  margin-bottom: 3%;
+}
+
+.price__span {
+  color: #000080;
+}
+
+.footer__div {
+  display: flex;
+  justify-content: space-around;
+}
