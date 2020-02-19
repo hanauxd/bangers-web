@@ -1,0 +1,41 @@
+.container {
+  width: 80%;
+  height: max-content;
+  margin: 2% auto;
+  display: flex;
+}
+
+.image__div {
+  width: 60%;
+  margin: 4% 2%;
+}
+
+.content__div {
+  width: 40%;
+  height: max-content;
+  margin: 4% 2%;
+  padding: 3%;
+  background: rgba(237, 240, 248);
+  box-shadow: 0 4px 8px 0 gray;
+}
+
+.price__div {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 2%;
+  color: #1c2a48;
+}
+
+@media (max-width: 900px) {
+  .container {
+    flex-flow: wrap column;
+  }
+
+  .image__div {
+    width: 100%;
+  }
+
+  .content__div {
+    width: 100%;
+  }
+}
