@@ -9,3 +9,4 @@ export { default as UserDocumentItem } from './user/userDocument/UserDocumentIte
 export { default as UtilityItem } from './utility/utilityItem/UtilityItem';
 export { default as VehicleItem } from './vehicle/vehicleItem/VehicleItem';
 export { default as VehicleDetails } from './vehicle/vehicleDetails/VehicleDetails';
+export { default as Booking } from './booking/Booking';

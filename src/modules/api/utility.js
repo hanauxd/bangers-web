@@ -8,7 +8,7 @@ export const onAddUtility = (values, token) => {
 
 export const onFetchUtilities = token => {
   const endpoint = 'utilities';
-  return get(endpoint, token)
+  return get(endpoint, token);
 }
 
 export const onUpdateUtility = (values, token) => {
@@ -16,4 +16,9 @@ export const onUpdateUtility = (values, token) => {
   const endpoint = `utilities/${type}`;
   const body = { ...values }
   return put(endpoint, body, token);
+}
+
+export const onFetchAvailableUtilities = () => {
+  const endpoint = "utilities/available";
+  return get(endpoint);
 }

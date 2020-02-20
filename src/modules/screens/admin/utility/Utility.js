@@ -27,7 +27,6 @@ const Utility = props => {
         utilities: [...result]
       })
     } catch (error) {
-      console.log(error)
       setState({
         loading: false,
         error: error.message
@@ -42,10 +41,8 @@ const Utility = props => {
         utilities: [...result]
       })
     } catch (error) {
-      const status = error.request.status
-      if (status === 400) {
-        alert("Utility already exist.")
-      }
+      const message = JSON.parse(error.request.response).message;
+      alert(message)
     }
   }
 
@@ -56,7 +53,8 @@ const Utility = props => {
         utilities: [...result]
       })
     } catch (error) {
-      console.log(error.message)
+      const message = JSON.parse(error.request.response).message;
+      alert(message);
     }
   }
 

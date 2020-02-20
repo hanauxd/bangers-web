@@ -29,7 +29,7 @@ const Vehicle = props => {
     } catch (error) {
       setState({
         loading: false,
-        error: error.message
+        error: error.request.response
       })
     }
   }
@@ -42,9 +42,8 @@ const Vehicle = props => {
         vehicles: [...result]
       })
     } catch (error) {
-      if (error.request.status === 400) {
-        alert("License number already exist.")
-      }
+      const message = JSON.parse(error.request.response).message;
+      alert(message);
     }
   }
 

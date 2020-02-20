@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { Booking } from '../../components';
+
 const Home = props => {
   return (
-    <div style={{ padding: '2%' }}>
-      HOME
+    <div>
+      <Booking auth={props.auth} />
     </div>
   )
 }

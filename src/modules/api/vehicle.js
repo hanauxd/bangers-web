@@ -1,8 +1,8 @@
 import { post, get } from './api';
 
-export const fetchVehicles = token => {
-  const endpoint = "vehicles";
-  return get(endpoint, token);
+export const fetchVehicles = () => {
+  const endpoint = "vehicles/all";
+  return get(endpoint);
 }
 
 export const fetchVehicleDetails = id => {
