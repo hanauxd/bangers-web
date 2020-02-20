@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { Auth, Toolbar, VehicleDetails } from './components';
-import { Home, SignIn, SignUp, Utility, Vehicle } from './screens';
+import { Home, SignIn, SignUp, Utility, Vehicle, Profile } from './screens';
 import { authSuccess } from './store/actions/auth';
 
 import styles from './Root.module.css';
@@ -34,6 +34,9 @@ const Root = props => {
           </Route>
           <Route exact path='/register'>
             <SignUp />
+          </Route>
+          <Route exact path='/profile'>
+            <Auth component={Profile} auth={props.auth} role="ROLE_USER" />
           </Route>
           <Route exact path='/admin/vehicle'>
             <Auth component={Vehicle} auth={props.auth} role="ROLE_ADMIN" />

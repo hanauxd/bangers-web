@@ -1,8 +1,11 @@
-export { default as Toolbar } from './toolbar/Toolbar';
+export { default as AddUtility } from './utility/addUtility/AddUtility';
+export { default as AddVehicle } from './vehicle/addVehicle/AddVehicle';
 export { default as Auth } from './auth/Auth';
 export { default as InputField } from './inputField/InputField';
+export { default as Profile } from './user/profile/Profile';
+export { default as Toolbar } from './toolbar/Toolbar';
+export { default as UserDocument } from './user/userDocument/UserDocument';
+export { default as UserDocumentItem } from './user/userDocument/UserDocumentItem';
 export { default as UtilityItem } from './utility/utilityItem/UtilityItem';
-export { default as AddUtility } from './utility/addUtility/AddUtility';
 export { default as VehicleItem } from './vehicle/vehicleItem/VehicleItem';
 export { default as VehicleDetails } from './vehicle/vehicleDetails/VehicleDetails';
-export { default as AddVehicle } from './vehicle/addVehicle/AddVehicle';
