@@ -106,6 +106,10 @@ const Booking = props => {
     }
   }
 
+  const handleResetForm = ({ resetForm }) => {
+    resetForm({});
+  }
+
   return (
     <Formik
       initialValues={initialValues}
@@ -116,6 +120,7 @@ const Booking = props => {
         values,
         handleBlur,
         setFieldValue,
+        resetForm,
       }) => {
         return (
           <Form>
@@ -182,7 +187,7 @@ const Booking = props => {
                   </div>
                   <div className={styles.button}>
                     <MDBBtn type='submit' style={btnStyles} color="amber accent-4" block >CONFIRM</MDBBtn>
-                    <MDBBtn type='button' style={btnStyles} color="amber accent-4" block >RESET</MDBBtn>
+                    <MDBBtn type='button' style={btnStyles} color="amber accent-4" block onClick={() => handleResetForm({ resetForm })}>RESET</MDBBtn>
                   </div>
                 </div>
               </div>
