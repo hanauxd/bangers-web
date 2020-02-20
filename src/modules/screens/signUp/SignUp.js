@@ -33,10 +33,12 @@ const SignUp = props => {
   const handleSignUp = async values => {
     try {
       const { firstName, lastName, phone, email, password, dob } = values;
-      const result = await onSignUp({ firstName, lastName, phone, email, password, dob, role: 'ROLE_USER' });
-      console.log(result)
+      await onSignUp({ firstName, lastName, phone, email, password, dob, role: 'ROLE_USER' });
+      history.push('/login');
     } catch (error) {
-      console.log(error)
+      if (error.request.status === 400) {
+        alert("Email address already exist.")
+      }
     }
   }
 

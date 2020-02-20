@@ -26,7 +26,6 @@ const VehicleDetails = props => {
   const fetchVehicleDetails = async () => {
     try {
       const result = await fetchVehicleFromApi(id);
-      console.log(result)
       setState({
         loading: false,
         vehicle: { ...result }
