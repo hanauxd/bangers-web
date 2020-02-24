@@ -27,6 +27,10 @@ const Toolbar = props => {
     history.push('/profile')
   }
 
+  const handleBookingHistory = () => {
+    history.push('/bookings')
+  }
+
   const toggleCollapse = () => {
     setState({
       isOpen: !state.isOpen
@@ -68,6 +72,7 @@ const Toolbar = props => {
                 <MDBIcon icon="user" />
               </MDBDropdownToggle>
               <MDBDropdownMenu right >
+                <MDBDropdownItem onClick={handleBookingHistory}>Booking History</MDBDropdownItem>
                 <MDBDropdownItem onClick={handleProfile}>Profile</MDBDropdownItem>
                 <MDBDropdownItem onClick={handleLogout}>Sign Out</MDBDropdownItem>
               </MDBDropdownMenu>
@@ -90,6 +95,9 @@ const Toolbar = props => {
           </MDBNavItem>
           <MDBNavItem>
             <MDBNavLink activeClassName={styles.activeClass} to='/admin/utility'>Utility</MDBNavLink>
+          </MDBNavItem>
+          <MDBNavItem>
+            <MDBNavLink activeClassName={styles.activeClass} to='/admin/bookings'>Booking</MDBNavLink>
           </MDBNavItem>
         </MDBNavbarNav>
         <MDBNavbarNav right>

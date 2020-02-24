@@ -2,8 +2,18 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import { Auth, Toolbar, VehicleDetails } from './components';
-import { Home, SignIn, SignUp, Utility, Vehicle, Profile } from './screens';
+import { Auth, Toolbar, VehicleDetails, ExtendBooking } from './components';
+import {
+  Home,
+  SignIn,
+  SignUp,
+  Utility,
+  Vehicle,
+  Profile,
+  BookingHistory,
+  Booking,
+  UpdateBooking
+} from './screens';
 import { authSuccess } from './store/actions/auth';
 
 import styles from './Root.module.css';
@@ -44,8 +54,20 @@ const Root = props => {
           <Route exact path='/admin/utility'>
             <Auth component={Utility} auth={props.auth} role="ROLE_ADMIN" />
           </Route>
+          <Route exact path='/admin/bookings'>
+            <Auth component={Booking} auth={props.auth} role="ROLE_ADMIN" />
+          </Route>
+          <Route exact path='/admin/bookings/:id'>
+            <Auth component={UpdateBooking} auth={props.auth} role="ROLE_ADMIN" />
+          </Route>
           <Route exact path='/vehicles/:id'>
             <Auth component={VehicleDetails} auth={props.auth} role="ROLE_ADMIN" />
+          </Route>
+          <Route exact path='/bookings/:id'>
+            <Auth component={ExtendBooking} auth={props.auth} role="ROLE_USER" />
+          </Route>
+          <Route exact path='/bookings'>
+            <Auth component={BookingHistory} auth={props.auth} role="ROLE_USER" />
           </Route>
         </Switch>
       </Router>

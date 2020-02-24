@@ -81,15 +81,26 @@
 }
 
 .datepicker__div {
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-  width: fit-content;
-  margin: 5% auto;
+  padding: 5px;
+}
+
+.datepicker__child {
+  flex: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.separator {
+  width: 5px;
 }
 
 .datepicker {
-  padding: 4px 15px 4px 40px;
-  margin: 0 5px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 8px 5px;
 }
 
 .select {

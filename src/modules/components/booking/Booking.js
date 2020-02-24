@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
 import { MDBBtn } from 'mdbreact';
-import { Formik, Form } from 'formik';
+import { Formik, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import DatePicker from "react-datepicker";
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
+import * as moment from 'moment';
 
 import { useCustomState } from './../../helpers/hooks';
-
-import styles from './Booking.module.css';
 import { onFetchAvailableUtilities } from '../../api/utility';
 import { fetchVehicles } from './../../api/vehicle';
 import { makeBooking } from './../../api/booking';
+
+import styles from './Booking.module.css';
 
 const animatedComponents = makeAnimated();
 const btnStyles = {
@@ -27,6 +28,8 @@ const Booking = props => {
     error: null,
     utils: [],
     vehicles: [],
+    startDate: new Date(),
+    endDate: new Date(new Date().getTime() + (1000 * 24 * 60 * 60))
   })
 
   useEffect(() => {
@@ -70,39 +73,50 @@ const Booking = props => {
   ))
 
   const vehicleList = state.vehicles.map(vehicle => (
-    { values: vehicle.id, label: `${vehicle.brand} ${vehicle.model}` }
+    { value: vehicle.id, label: `${vehicle.brand} ${vehicle.model}` }
   ))
 
   const initialValues = {
-    startDate: '',
-    endDate: '',
-    utilities: '',
+    startDate: state.startDate,
+    endDate: state.endDate,
+    utilities: [],
     vehicleId: '',
   }
 
   const bookingSchema = Yup.object().shape({
     startDate: Yup.date().required("Select a pick up date."),
     endDate: Yup.date().required("Select a return date."),
-    vehicleId: Yup.string().required("Select a vehicle."),
-    utilities: Yup.array(),
+    vehicleId: Yup.string().typeError('Select a vehicle.').required("Select a vehicle."),
   })
 
   const handleBooking = async (values, { resetForm }) => {
+    const utcStartDate = moment(values.startDate).utc().format('YYYY-MM-DD HH:mm:ss');
+    const utcEndDate = moment(values.endDate).utc().format('YYYY-MM-DD HH:mm:ss');
+    console.log(utcStartDate);
+    console.log(utcEndDate);
     const booking = {
-      startDate: values.startDate.toLocaleString('en-GB', { timeZone: 'UTC' }),
-      endDate: values.endDate.toLocaleString('en-GB', { timeZone: 'UTC' }),
-      vehicleId: values.vehicleId[0].values,
+      startDate: utcStartDate,
+      endDate: utcEndDate,
+      status: "Confirmed",
+      vehicleId: values.vehicleId.value,
       utilities: values.utilities.map(ut => (ut.value))
     }
-    console.log("[BOOKING VALUES]", booking)
     try {
-      const token = props.auth.jwt;
-      const result = await makeBooking(booking, token);
-      console.log("[BOOKING SUCCESS]", result)
-      resetForm({})
+      const auth = props.auth;
+      if (auth === null) {
+        alert("Sign in to continue.")
+      } else {
+        await makeBooking(booking, auth.jwt);
+        resetForm({});
+      }
     } catch (error) {
-      // const msg = JSON.parse(error.request.response).message
-      console.log("[BOOKING FAILED]", error.request)
+      console.log(error);
+      if (error.request !== null) {
+        const msg = JSON.parse(error.request.response).message
+        alert(msg);
+      } else {
+        console.log("[BOOKING FAILED]", error.message);
+      }
     }
   }
 
@@ -115,8 +129,9 @@ const Booking = props => {
       {({
         values,
         handleBlur,
+        setFieldTouched,
         setFieldValue,
-        resetForm,
+        resetForm
       }) => {
         return (
           <Form>
@@ -136,50 +151,62 @@ const Booking = props => {
                 <div className={styles.booking__div}>
                   <h2>Booking Details</h2>
                   <div className={styles.datepicker__div}>
-                    <DatePicker
-                      name="startDate"
-                      type="date"
-                      onChange={value => setFieldValue('startDate', value)}
-                      onBlur={handleBlur}
-                      value={values.startDate}
-                      className={styles.datepicker}
-                      selected={values.startDate}
-                      showTimeSelect
-                      dateFormat="Pp" />
-                    <DatePicker
-                      name="endDate"
-                      type="date"
-                      onChange={value => setFieldValue('endDate', value)}
-                      onBlur={handleBlur}
-                      value={values.endDate}
-                      className={styles.datepicker}
-                      selected={values.endDate}
-                      showTimeSelect
-                      dateFormat="Pp" />
+                    <div className={styles.datepicker__child}>
+                      <DatePicker
+                        onChange={value => setFieldValue('startDate', value)}
+                        onBlur={handleBlur}
+                        value={values.startDate}
+                        className={styles.datepicker}
+                        selected={values.startDate}
+                        showTimeSelect
+                        dateFormat="Pp" />
+                      <ErrorMessage name="startDate">
+                        {
+                          message => <span style={{ color: 'red' }}>{message}</span>
+                        }
+                      </ErrorMessage ></div>
+                    <div className={styles.separator} />
+                    <div className={styles.datepicker__child}>
+                      <DatePicker
+                        onChange={value => { setFieldValue('endDate', value) }}
+                        onBlur={handleBlur}
+                        value={values.endDate}
+                        className={styles.datepicker}
+                        selected={values.endDate}
+                        showTimeSelect
+                        dateFormat="Pp" />
+                      <ErrorMessage name="endDate">
+                        {
+                          message => <span style={{ color: 'red' }}>{message}</span>
+                        }
+                      </ErrorMessage ></div>
                   </div>
                   <div className={styles.select}>
                     <Select
-                      name="vehicleId"
-                      type="text"
-                      onChange={value => setFieldValue('vehicleId', value)}
-                      onBlur={handleBlur}
+                      onChange={value => { setFieldValue('vehicleId', value) }}
+                      onBlur={() => { setFieldTouched('vehicleId') }}
                       value={values.vehicleId}
-                      components={animatedComponents}
-                      isMulti
                       options={vehicleList}
                     />
+                    <ErrorMessage name="vehicleId">
+                      {
+                        message => <span style={{ color: 'red' }}>{message}</span>
+                      }
+                    </ErrorMessage >
                   </div>
                   <div className={styles.select}>
                     <Select
-                      name="utilities"
-                      type="array"
-                      onChange={value => setFieldValue('utilities', value)}
-                      onBlur={handleBlur}
-                      value={values.utilities}
+                      onChange={value => { setFieldValue('utilities', value) }}
+                      onBlur={() => { setFieldTouched('utilities') }}
                       components={animatedComponents}
                       isMulti
                       options={utilList}
                     />
+                    <ErrorMessage name="utilities">
+                      {
+                        message => <span style={{ color: 'red' }}>{message}</span>
+                      }
+                    </ErrorMessage >
                   </div>
                   <div className={styles.button}>
                     <MDBBtn type='submit' style={btnStyles} color="amber accent-4" block >CONFIRM</MDBBtn>

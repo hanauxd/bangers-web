@@ -10,3 +10,4 @@ export { default as UtilityItem } from './utility/utilityItem/UtilityItem';
 export { default as VehicleItem } from './vehicle/vehicleItem/VehicleItem';
 export { default as VehicleDetails } from './vehicle/vehicleDetails/VehicleDetails';
 export { default as Booking } from './booking/Booking';
+export { default as ExtendBooking } from './booking/extendBooking/ExtendBooking';

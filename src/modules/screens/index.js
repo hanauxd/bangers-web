@@ -4,3 +4,6 @@ export { default as SignUp } from './signUp/SignUp';
 export { default as Utility } from './admin/utility/Utility';
 export { default as Vehicle } from './admin/vehicle/Vehicle';
 export { default as Profile } from './profile/Profile';
+export { default as BookingHistory } from './bookingHistory/BookingHistory';
+export { default as Booking } from './admin/booking/Booking';
+export { default as UpdateBooking } from './admin/booking/updateBooking/UpdateBooking';
