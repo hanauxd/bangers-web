@@ -48,7 +48,6 @@ const Booking = props => {
 
   const renderAllBookings = () => {
     const allBooking = state.bookings.map(item => {
-      console.log(item)
       return (
         <div key={item.id}>
           <button onClick={() => handleViewBooking(item.id)}>VIEW BOOKING</button>
@@ -56,7 +55,7 @@ const Booking = props => {
         </div>
       )
     })
-    return allBooking;
+    return allBooking.reverse();
   }
 
   return state.loading ? renderLoading() : state.error ? renderError() : renderAllBookings();
