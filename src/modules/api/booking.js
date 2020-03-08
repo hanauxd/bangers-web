@@ -26,8 +26,14 @@ export const fetchBookingById = (id, token) => {
   return get(endpoint, token);
 }
 
-export const updateBooking = (values, token) => {
+export const extendBooking = (values, token) => {
   const endpoint = `bookings/${values.id}`;
   const body = { ...values };
   return put(endpoint, body, token);
+}
+
+export const updateBooking = (values, token) => {
+  const { id, status } = values;
+  const endpoint = `bookings/update?id=${id}&status=${status}`;
+  return post(endpoint, {}, token);
 }

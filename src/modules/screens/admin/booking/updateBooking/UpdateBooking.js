@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { MDBBtn } from 'mdbreact';
 import { Formik, ErrorMessage, Form } from 'formik';
-import * as Yup from 'yup';
 import Select from 'react-select';
 
 import { useCustomState } from './../../../../helpers/hooks';
-import { fetchBookingById } from '../../../../api/booking';
-import { MDBBtn } from 'mdbreact';
+import { fetchBookingById, updateBooking } from '../../../../api/booking';
 
 const UpdateBooking = props => {
   const { match: { params: { id } } } = props;
@@ -52,8 +51,19 @@ const UpdateBooking = props => {
     { value: "Failed", label: "Failed" }
   ]
 
-  const handleUpdateBooking = values => {
-    console.log({ status: values.status.value })
+  const handleUpdateBooking = async values => {
+    try {
+      const token = props.auth.jwt;
+      const booking = {
+        id: state.booking.id,
+        status: values.status.value
+      }
+      const result = await updateBooking(booking, token);
+      console.log("[UPDATE SUCCESS]", result)
+    } catch (error) {
+      const msg = JSON.parse(error.request.response)
+      console.log(msg)
+    }
   }
 
   const renderBookingDetails = () => {
@@ -67,7 +77,7 @@ const UpdateBooking = props => {
         {({
           setFieldValue,
           setFieldTouched,
-          values
+          values,
         }) => {
           return (
             <Form>

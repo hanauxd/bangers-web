@@ -112,3 +112,25 @@
   display: flex;
   justify-content: space-between;
 }
+
+@media (max-width: 830px) {
+  .container {
+    flex-flow: wrap column;
+  }
+
+  .contentLeft__div {
+    width: 100%;
+  }
+
+  .booking__div {
+    width: 100%;
+  }
+
+  .title {
+    font-size: 34px;
+  }
+
+  .body {
+    height: 100%;
+  }
+}

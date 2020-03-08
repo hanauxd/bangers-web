@@ -11,7 +11,7 @@ import * as moment from 'moment';
 
 import { useCustomState } from './../../../helpers/hooks';
 import { fetchBooking } from '../../../api/booking';
-import { updateBooking } from './../../../api/booking';
+import { extendBooking } from './../../../api/booking';
 import { onFetchAvailableUtilities } from '../../../api/utility';
 
 const animatedComponents = makeAnimated();
@@ -98,8 +98,7 @@ const ExtendBooking = props => {
     }
     try {
       const token = props.auth.jwt;
-      const result = await updateBooking(booking, token);
-      console.log("[UPDATE BOOKING SUCCESS]", result)
+      await extendBooking(booking, token);
     } catch (error) {
       console.log("[EXTEND BOOKING FAILED]", error.request.response)
       const err = JSON.parse(error.request.response);
