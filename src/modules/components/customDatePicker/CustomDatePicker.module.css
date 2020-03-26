@@ -1,0 +1,15 @@
+.datepicker__child {
+    flex: 1;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.datepicker {
+    background-color: white;
+    border-style: none;
+    border: 1px solid #cccccc;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px 5px;
+}

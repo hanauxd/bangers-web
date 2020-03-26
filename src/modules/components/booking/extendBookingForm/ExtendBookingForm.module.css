@@ -1,0 +1,21 @@
+.container {
+    margin: 2%;
+    padding: 2%;
+    border: 1px solid gray;
+    font-family: "Montserrat", sans-serif;
+}
+
+.container h3 {
+    margin: 1% auto;
+    text-align: center;
+}
+
+.separator {
+    width: 5px;
+}
+
+.datepicker__container {
+    width: 100%;
+    display: flex;
+    padding: 5px;
+}

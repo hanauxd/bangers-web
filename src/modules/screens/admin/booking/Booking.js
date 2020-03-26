@@ -1,69 +1,100 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import Select from "react-select";
 
-import { useCustomState } from './../../../helpers/hooks';
-import { fetchAllBookings } from '../../../api/booking';
-import { useHistory } from 'react-router-dom';
+import { useCustomState } from "./../../../helpers/hooks";
+import { BookingHistoryList, Spinner } from "../../../components";
+import { fetchAllBookings } from "../../../api/booking";
+import { onGetAllUsers } from "../../../api/user";
+
+import styles from "./Booking.module.css";
 
 const Booking = props => {
-  const history = useHistory();
-  const [state, setState] = useCustomState({
-    loading: false,
-    error: null,
-    bookings: [],
-  })
-
-  useEffect(() => {
-    fetchAllBookingsFromApi();
-    //eslint-disable-next-line
-  }, [])
-
-  const fetchAllBookingsFromApi = async () => {
-    try {
-      const token = props.auth.jwt;
-      const result = await fetchAllBookings(token);
-      setState({
+    const [state, setState] = useCustomState({
         loading: false,
-        bookings: [...result]
-      });
-    } catch (error) {
-      setState({
-        loading: false,
-        error: error.message,
-      })
-    }
-  }
+        error: null,
+        selectedCustomer: "",
+        bookings: [],
+        users: []
+    });
 
-  const handleViewBooking = id => {
-    history.push(`/admin/bookings/${id}`);
-  }
+    useEffect(() => {
+        fetchAllBookingsFromApi();
+        fetchAllUsersFromApi();
+        //eslint-disable-next-line
+    }, []);
 
-  const renderLoading = () => {
-    return <div>Loading...</div>
-  }
+    const fetchAllBookingsFromApi = async () => {
+        try {
+            const token = props.auth.jwt;
+            const result = await fetchAllBookings(token);
+            setState({
+                loading: false,
+                bookings: [...result]
+            });
+        } catch (error) {
+            setState({
+                loading: false,
+                error: error.message
+            });
+        }
+    };
 
-  const renderError = () => {
-    return <div>{state.error}</div>
-  }
+    const fetchAllUsersFromApi = async () => {
+        try {
+            const token = props.auth.jwt;
+            const result = await onGetAllUsers(token);
+            setState({
+                users: [...result]
+            });
+        } catch (error) {
+            setState({
+                loading: false,
+                error: error.message
+            });
+        }
+    };
 
-  const renderAllBookings = () => {
-    const allBooking = state.bookings.map(item => {
-      return (
-        <div key={item.id}>
-          <button onClick={() => handleViewBooking(item.id)}>VIEW BOOKING</button>
-          <div>Booking ID: {item.id}</div>
-        </div>
-      )
-    })
-    return allBooking.reverse();
-  }
+    const renderError = () => {
+        return <div>{state.error}</div>;
+    };
 
-  return state.loading ? renderLoading() : state.error ? renderError() : renderAllBookings();
-}
+    const renderUserBookings = () => {
+        const userOptions = state.users.map(user => ({ value: user.id, label: user.email }));
+        const handleChangeCustomer = value => {
+            setState({
+                selectedCustomer: value ? value.value : null
+            });
+        };
+        const customerBookings = state.bookings.filter(booking => booking.user.id === state.selectedCustomer);
+        return (
+            <div className={styles.userBookings__container}>
+                <h3>ALL BOOKINGS</h3>
+                <Select
+                    isClearable
+                    autoFocus
+                    placeholder="Select a customer"
+                    options={userOptions}
+                    onChange={handleChangeCustomer}
+                    className={styles.inputSelect}
+                />
+                {!state.selectedCustomer ? (
+                    <BookingHistoryList bookings={state.bookings} />
+                ) : customerBookings.length ? (
+                    <BookingHistoryList bookings={customerBookings} />
+                ) : (
+                    <div className={styles.message}>No booking history</div>
+                )}
+            </div>
+        );
+    };
+
+    return state.loading ? <Spinner /> : state.error ? renderError() : renderUserBookings();
+};
 
 const mapStateToProps = state => {
-  return {
-    auth: state.auth.auth
-  }
-}
+    return {
+        auth: state.auth.auth
+    };
+};
 export default connect(mapStateToProps, null)(Booking);

@@ -1,136 +1,136 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap");
 
 .body {
-  background: url(https://demo.w3layouts.com/demos_new/template_demo/19-12-2017/online_auto_booking_form-demo_Free/1440576869/web/images/banner.jpg)
-    no-repeat center top;
-  background-size: cover;
-  height: 100vh;
-  margin: 0;
-  text-align: center;
-  background-attachment: fixed;
-  padding-top: 4%;
-  font-family: "Montserrat", sans-serif;
+    background: url(https://demo.w3layouts.com/demos_new/template_demo/19-12-2017/online_auto_booking_form-demo_Free/1440576869/web/images/banner.jpg)
+        no-repeat center top;
+    background-size: cover;
+    height: 100vh;
+    margin: 0;
+    text-align: center;
+    background-attachment: fixed;
+    padding-top: 4%;
+    font-family: "Montserrat", sans-serif;
 }
 
 .title {
-  letter-spacing: 3px;
-  text-shadow: 1px 1px 7px #6b6b6b;
-  color: white;
-  font-size: 54px;
-  font-weight: 400;
-  text-transform: capitalize;
-  margin-bottom: 3%;
+    letter-spacing: 3px;
+    text-shadow: 1px 1px 7px #6b6b6b;
+    color: white;
+    font-size: 54px;
+    font-weight: 400;
+    text-transform: capitalize;
+    margin-bottom: 3%;
 }
 
 .title span {
-  color: #ecb731;
+    color: #ecb731;
 }
 
 .container {
-  width: 80%;
-  font: inherit;
-  margin: 0 auto;
-  display: flex;
+    width: 80%;
+    font: inherit;
+    margin: 0 auto;
+    display: flex;
 }
 
 .contentLeft__div {
-  background: url("https://demo.w3layouts.com/demos_new/template_demo/19-12-2017/online_auto_booking_form-demo_Free/1440576869/web/images/left-img.jpg")
-    no-repeat center top;
-  width: 40%;
-  padding: 4rem 2rem;
-  background-size: cover;
+    background: url("https://demo.w3layouts.com/demos_new/template_demo/19-12-2017/online_auto_booking_form-demo_Free/1440576869/web/images/left-img.jpg")
+        no-repeat center top;
+    width: 40%;
+    padding: 4rem 2rem;
+    background-size: cover;
 }
 
 .contentLeft__div h3 {
-  color: #ecb731;
-  text-shadow: 1px 1px 7px #0e0e0e;
-  font-weight: 600;
-  font-size: 1.8em;
-  letter-spacing: 2px;
-  text-transform: capitalize;
-  margin-bottom: 5%;
+    color: #ecb731;
+    text-shadow: 1px 1px 7px #0e0e0e;
+    font-weight: 600;
+    font-size: 1.8em;
+    letter-spacing: 2px;
+    text-transform: capitalize;
+    margin-bottom: 5%;
 }
 
 .contentLeft__div li {
-  color: #e6ebff;
-  letter-spacing: 1px;
-  font-size: 16px;
-  list-style: none;
-  margin-top: 7px;
-  text-align: start;
+    color: #e6ebff;
+    letter-spacing: 1px;
+    font-size: 16px;
+    list-style: none;
+    margin-top: 7px;
+    text-align: start;
 }
 
 .contentLeft__div li span {
-  color: #ecb731;
-  font-size: 40px;
-  display: inline-block;
-  margin-right: 10px;
+    color: #ecb731;
+    font-size: 40px;
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .booking__div {
-  box-sizing: border-box;
-  padding: 5% 10%;
-  margin: 0;
-  width: 60%;
-  background: rgba(0, 0, 0, 0.78);
+    box-sizing: border-box;
+    padding: 5% 10%;
+    margin: 0;
+    width: 60%;
+    background: rgba(0, 0, 0, 0.78);
 }
 
 .booking__div h2 {
-  color: #e6ebff;
-  margin-bottom: 10%;
+    color: #e6ebff;
+    margin-bottom: 10%;
 }
 
 .datepicker__div {
-  width: 100%;
-  display: flex;
-  padding: 5px;
+    width: 100%;
+    display: flex;
+    padding: 5px;
 }
 
 .datepicker__child {
-  flex: 1;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
+    flex: 1;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
 .separator {
-  width: 5px;
+    width: 5px;
 }
 
 .datepicker {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 8px 5px;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px 5px;
 }
 
 .select {
-  text-align: justify;
-  margin: 6% 5px;
+    text-align: justify;
+    margin: 6% 5px;
 }
 
 .button {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 @media (max-width: 830px) {
-  .container {
-    flex-flow: wrap column;
-  }
+    .container {
+        flex-flow: wrap column;
+    }
 
-  .contentLeft__div {
-    width: 100%;
-  }
+    .contentLeft__div {
+        width: 100%;
+    }
 
-  .booking__div {
-    width: 100%;
-  }
+    .booking__div {
+        width: 100%;
+    }
 
-  .title {
-    font-size: 34px;
-  }
+    .title {
+        font-size: 34px;
+    }
 
-  .body {
-    height: 100%;
-  }
+    .body {
+        height: 100%;
+    }
 }

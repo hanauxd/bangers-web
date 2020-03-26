@@ -1,0 +1,43 @@
+.main__div {
+    width: 60%;
+    margin: 3% auto;
+}
+
+.main__div h3 {
+    text-align: center;
+    margin-bottom: 4%;
+}
+
+.details__container {
+    display: flex;
+    flex-direction: column;
+    font-family: "Montserrat", sans-serif;
+    margin: 0 auto;
+}
+
+.details__container h3 {
+    margin: 2% auto;
+}
+
+.details__div {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.details__div span {
+    font-weight: bold;
+}
+
+.details__block {
+    display: flex;
+    margin: 0.5% auto;
+    width: 100%;
+    border-bottom: 1px solid #cccccc;
+}
+
+.status__field {
+    width: 60%;
+    justify-content: center;
+}
