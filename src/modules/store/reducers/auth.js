@@ -2,15 +2,19 @@ import { AUTH_SUCCESS, LOGOUT_SUCCESS } from "../actions/actionTypes";
 import createReducer from "./createReducer";
 
 const initialState = {
-    auth: null
+    auth: null,
+    authCheckLoading: true
 };
 
 const authSuccessReducer = (state = initialState, { payload }) => {
     return {
         ...state,
-        auth: {
-            ...payload
-        }
+        auth: payload
+            ? {
+                  ...payload
+              }
+            : null,
+        authCheckLoading: false
     };
 };
 

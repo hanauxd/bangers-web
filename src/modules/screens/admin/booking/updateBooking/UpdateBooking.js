@@ -100,8 +100,7 @@ const UpdateBooking = props => {
                 price,
                 lateReturn,
                 status,
-                vehicle: { brand, model },
-                bookingUtilities
+                vehicle: { brand, model }
             }
         } = state;
         const utilities = renderEquipmentDetails();
@@ -132,7 +131,7 @@ const UpdateBooking = props => {
                         {status}
                     </div>
                     <div className={styles.details__div}>
-                        <span>Late Return</span> {lateReturn ? "Yes" : "No"}
+                        <span>LATE RETURN</span> {lateReturn ? "Yes" : "No"}
                     </div>
                 </div>
                 <div className={styles.details__block}>

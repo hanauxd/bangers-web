@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { authSuccess } from "./store/actions/auth";
-import { Auth, Toolbar, VehicleDetails, ExtendBooking } from "./components";
+import { Auth, Toolbar, VehicleDetails, ExtendBooking, Spinner } from "./components";
 import {
     Home,
     SignIn,
@@ -25,13 +25,13 @@ import "mdbreact/dist/css/mdb.css";
 const Root = props => {
     useEffect(() => {
         const auth = JSON.parse(localStorage.getItem("auth"));
-        if (auth !== null) {
-            props.onSuccess({ ...auth });
-        }
+        props.onSuccess(auth);
         //eslint-disable-next-line
     }, []);
 
-    return (
+    return props.authCheckLoading ? (
+        <Spinner />
+    ) : (
         <div className={styles.container}>
             <Router>
                 <Toolbar />
@@ -80,7 +80,8 @@ const Root = props => {
 
 const mapStateToProps = state => {
     return {
-        auth: state.auth.auth
+        auth: state.auth.auth,
+        authCheckLoading: state.auth.authCheckLoading
     };
 };
 
