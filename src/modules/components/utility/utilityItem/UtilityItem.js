@@ -1,5 +1,5 @@
 import React from "react";
-import { MDBBtn, MDBCardTitle, MDBCardText, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter } from "mdbreact";
+import { MDBBtn, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter } from "mdbreact";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 

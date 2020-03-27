@@ -1,43 +1,44 @@
 .container {
-  width: 80%;
-  height: 60%;
-  position: absolute;
-  left: 10%;
-  top: 22%;
-  background-color: #ffdb58;
+    width: 80%;
+    height: 60%;
+    position: absolute;
+    left: 10%;
+    top: 22%;
+    background-color: #ffdb58;
+    font-family: "Montserrat", sans-serif;
 }
 
 .content {
-  width: 45%;
-  height: 120%;
-  padding: 4% 5%;
-  transform: translate(5%, -8%);
-  background-color: white;
-  box-shadow: 0 4px 8px 0 gray;
+    width: 45%;
+    height: 120%;
+    padding: 4% 5%;
+    transform: translate(5%, -8%);
+    background-color: white;
+    box-shadow: 0 4px 8px 0 gray;
 }
 
 .title {
-  text-align: center;
-  font-size: 1.8rem;
+    text-align: center;
+    font-size: 1.8rem;
 }
 
 .button {
-  margin-top: 2%;
+    margin-top: 2%;
 }
 
 .signInText {
-  margin-top: 2%;
-  float: right;
+    margin-top: 2%;
+    float: right;
 }
 
 .signInLink {
-  color: orange;
-  font-weight: bold;
-  cursor: pointer;
+    color: orange;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .logo {
-  font-size: 4rem;
-  font-weight: bold;
-  transform: translate(120%, -130%);
+    font-size: 4rem;
+    font-weight: bold;
+    transform: translate(120%, -130%);
 }

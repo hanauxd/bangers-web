@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { MDBCardImage, MDBCardTitle, MDBCardFooter, MDBIcon } from "mdbreact";
+import { MDBCardImage, MDBCardFooter, MDBIcon } from "mdbreact";
 
 import { currency } from "../../../helpers/CurrencyFormatter";
 
