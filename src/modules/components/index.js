@@ -17,3 +17,4 @@ export { default as ExtendBookingForm } from "./booking/extendBookingForm/Extend
 export { default as CustomDatePicker } from "./customDatePicker/CustomDatePicker";
 export { default as CustomSelect } from "./customSelect/CustomSelect";
 export { default as Spinner } from "./spinner/Spinner";
+export { default as BookingDetails } from "./booking/bookingDetails/BookingDetails";

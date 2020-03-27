@@ -67,54 +67,57 @@ const VehicleDetails = props => {
         });
 
         return (
-            <div className={styles.container}>
-                <div className={styles.image__div}>
-                    <Carousel>{images}</Carousel>
-                </div>
-                <div className={styles.content__div}>
-                    <div className={styles.price__div}>
-                        <h4>{currency.format(state.vehicle.price)}</h4>
-                        <span>/DAILY</span>
+            <div className={styles.root}>
+                <h3>VEHICLE DETAILS</h3>
+                <div className={styles.container}>
+                    <div className={styles.image__div}>
+                        <Carousel>{images}</Carousel>
                     </div>
-                    <MDBTable responsive>
-                        <MDBTableBody>
-                            <tr>
-                                <td>License</td>
-                                <td>{state.vehicle.license}</td>
-                            </tr>
-                            <tr>
-                                <td>Description</td>
-                                <td>{state.vehicle.description}</td>
-                            </tr>
-                            <tr>
-                                <td>Brand</td>
-                                <td>{state.vehicle.brand}</td>
-                            </tr>
-                            <tr>
-                                <td>Model</td>
-                                <td>{state.vehicle.model}</td>
-                            </tr>
-                            <tr>
-                                <td>Fuel Type</td>
-                                <td>{state.vehicle.fuelType}</td>
-                            </tr>
-                            <tr>
-                                <td>Transmission Type</td>
-                                <td>{state.vehicle.transmissionType}</td>
-                            </tr>
-                            <tr>
-                                <td>Category</td>
-                                <td>{state.vehicle.category}</td>
-                            </tr>
-                            <tr>
-                                <td>Size</td>
-                                <td>{state.vehicle.size}</td>
-                            </tr>
-                        </MDBTableBody>
-                        <MDBBtn color="mdb-color darken-3" onClick={handleBookVehicle}>
+                    <div className={styles.content__div}>
+                        <div className={styles.price__div}>
+                            <h4>{currency.format(state.vehicle.price)}</h4>
+                            <span>/DAILY</span>
+                        </div>
+                        <MDBTable responsive>
+                            <MDBTableBody>
+                                <tr>
+                                    <td className={styles.bold__label}>License</td>
+                                    <td>{state.vehicle.license}</td>
+                                </tr>
+                                <tr>
+                                    <td className={styles.bold__label}>Description</td>
+                                    <td>{state.vehicle.description}</td>
+                                </tr>
+                                <tr>
+                                    <td className={styles.bold__label}>Brand</td>
+                                    <td>{state.vehicle.brand}</td>
+                                </tr>
+                                <tr>
+                                    <td className={styles.bold__label}>Model</td>
+                                    <td>{state.vehicle.model}</td>
+                                </tr>
+                                <tr>
+                                    <td className={styles.bold__label}>Fuel Type</td>
+                                    <td>{state.vehicle.fuelType}</td>
+                                </tr>
+                                <tr>
+                                    <td className={styles.bold__label}>Transmission Type</td>
+                                    <td>{state.vehicle.transmissionType}</td>
+                                </tr>
+                                <tr>
+                                    <td className={styles.bold__label}>Category</td>
+                                    <td>{state.vehicle.category}</td>
+                                </tr>
+                                <tr>
+                                    <td className={styles.bold__label}>Size</td>
+                                    <td>{state.vehicle.size}</td>
+                                </tr>
+                            </MDBTableBody>
+                        </MDBTable>
+                        <MDBBtn className={styles.book__btn} color="mdb-color darken-3" onClick={handleBookVehicle}>
                             Book Now
                         </MDBBtn>
-                    </MDBTable>
+                    </div>
                 </div>
             </div>
         );

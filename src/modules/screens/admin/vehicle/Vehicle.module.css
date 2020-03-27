@@ -1,18 +1,30 @@
 .container {
-  display: flex;
-  width: 90%;
-  padding: 0 2%;
-  margin: 3% auto;
+    display: flex;
+    width: 90%;
+    padding: 0 2%;
+    margin: 3% auto;
 }
 
 .form__div {
-  width: 40%;
-  margin: 2%;
+    width: 40%;
+    margin: 2%;
 }
 
 .items__div {
-  width: 60%;
-  margin: 2%;
-  display: flex;
-  flex-flow: wrap row;
+    width: 60%;
+    margin: 2%;
+    display: flex;
+    flex-flow: wrap row;
+}
+
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+    }
+    .form__div {
+        width: 100%;
+    }
+    .items__div {
+        width: 100%;
+    }
 }

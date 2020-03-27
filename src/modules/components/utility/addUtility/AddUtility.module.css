@@ -1,7 +1,11 @@
 .container {
-  margin: 2% auto;
+    margin: 2% auto;
+}
+
+.container h3 {
+    font-family: "Montserrat", sans-serif;
 }
 
 .button__div {
-  margin-top: 5%;
+    margin-top: 5%;
 }

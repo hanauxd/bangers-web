@@ -163,7 +163,7 @@ const Booking = props => {
                                     </ul>
                                 </div>
                                 <div className={styles.booking__div}>
-                                    <h2>Booking Details</h2>
+                                    <h2>BOOKING DETAILS</h2>
                                     <div className={styles.datepicker__div}>
                                         <div className={styles.datepicker__child}>
                                             <CustomDatePicker

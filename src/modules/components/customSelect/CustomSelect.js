@@ -20,12 +20,13 @@ const CustomSelect = props => {
     const applyStyles = base => {
         return {
             ...base,
-            borderRadius: 0
+            borderRadius: 0,
+            padding: "5px 3px"
         };
     };
 
     return (
-        <div>
+        <div style={{ width: "100%" }}>
             <Select
                 styles={{
                     control: base => applyStyles(base)

@@ -6,10 +6,8 @@ import { Formik, Form } from "formik";
 
 import { confirmedOptions, collectedOptions } from "./BookingStatus";
 import { useCustomState } from "./../../../../helpers/hooks";
-import { formatDate } from "../../../../helpers/DateFormatter";
-import { currency } from "../../../../helpers/CurrencyFormatter";
 import { fetchBookingById, updateBooking } from "../../../../api/booking";
-import { CustomSelect, Spinner } from "../../../../components/index";
+import { CustomSelect, Spinner, BookingDetails } from "../../../../components/index";
 
 import styles from "./UpdateBooking.module.css";
 
@@ -75,77 +73,9 @@ const UpdateBooking = props => {
         }
     };
 
-    const renderEquipmentDetails = () => {
-        const { bookingUtilities } = state.booking;
-        if (bookingUtilities.length === 0) {
-            return "None";
-        }
-        let val = "";
-        for (let i = 0; i < bookingUtilities.length; i++) {
-            if (i === bookingUtilities.length - 1) {
-                val += `${bookingUtilities[i].utility.utilityType}`;
-            } else {
-                val += `${bookingUtilities[i].utility.utilityType}, `;
-            }
-        }
-        return val;
-    };
-
     const renderBookingDetails = () => {
-        const {
-            booking: {
-                id,
-                startDate,
-                endDate,
-                price,
-                lateReturn,
-                status,
-                vehicle: { brand, model }
-            }
-        } = state;
-        const utilities = renderEquipmentDetails();
-        const details = (
-            <div className={styles.details__container}>
-                <div className={styles.details__block}>
-                    <div className={styles.details__div}>
-                        <span>VEHICLE</span>
-                        {brand} {model}
-                    </div>
-                    <div className={styles.details__div}>
-                        <span>BOOKING ID</span>
-                        {id}
-                    </div>
-                </div>
-                <div className={styles.details__block}>
-                    <div className={styles.details__div}>
-                        <span>FROM</span>
-                        {formatDate(startDate)}
-                    </div>
-                    <div className={styles.details__div}>
-                        <span>TO</span> {formatDate(endDate)}
-                    </div>
-                </div>
-                <div className={styles.details__block}>
-                    <div className={styles.details__div}>
-                        <span>STATUS</span>
-                        {status}
-                    </div>
-                    <div className={styles.details__div}>
-                        <span>LATE RETURN</span> {lateReturn ? "Yes" : "No"}
-                    </div>
-                </div>
-                <div className={styles.details__block}>
-                    <div className={styles.details__div}>
-                        <span>PRICE</span>
-                        {currency.format(price)}
-                    </div>
-                    <div className={styles.details__div}>
-                        <span>UTILITIES</span>
-                        {utilities}
-                    </div>
-                </div>
-            </div>
-        );
+        const { booking } = state;
+        const details = <BookingDetails booking={booking} />;
         return (
             <Formik
                 initialValues={{
@@ -174,6 +104,7 @@ const UpdateBooking = props => {
                                     />
                                 </div>
                                 <MDBBtn
+                                    className={styles.update__btn}
                                     type="submit"
                                     color="mdb-color darken-3"
                                     style={{ margin: "0", float: "right" }}
