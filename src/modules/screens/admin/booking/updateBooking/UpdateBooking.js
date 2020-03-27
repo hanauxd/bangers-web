@@ -104,6 +104,9 @@ const UpdateBooking = props => {
                                     />
                                 </div>
                                 <MDBBtn
+                                    disabled={
+                                        booking.status === "Returned" || booking.status === "Failed" ? true : false
+                                    }
                                     className={styles.update__btn}
                                     type="submit"
                                     color="mdb-color darken-3"
