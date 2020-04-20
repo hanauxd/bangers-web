@@ -1,0 +1,8 @@
+.bookingHistory__div {
+    display: flex;
+    flex-direction: column;
+}
+
+.bookingHistory__div h3 {
+    margin: 3% auto;
+}

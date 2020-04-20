@@ -1,8 +1,19 @@
 .container {
-  width: 250px;
-  height: fit-content;
-  margin: 2%;
-  padding: 1%;
-  box-shadow: 0 4px 8px 0 gray;
-  text-align: center;
+    width: 250px;
+    height: fit-content;
+    margin: 2%;
+    padding: 3%;
+    box-shadow: 0 4px 8px 0 gray;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+}
+
+.container h3 {
+    margin-top: 10px;
+    font-size: x-large;
+}
+
+.container span {
+    display: block;
+    margin-bottom: 10px;
 }

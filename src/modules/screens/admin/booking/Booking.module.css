@@ -1,0 +1,19 @@
+.userBookings__container {
+    display: flex;
+    flex-direction: column;
+    font-family: "Montserrat", sans-serif;
+}
+
+.userBookings__container h3 {
+    margin: 3% auto;
+}
+
+.inputSelect {
+    width: 50%;
+    margin: 0 auto 3%;
+}
+
+.message {
+    font-size: 1.2rem;
+    margin: auto;
+}

@@ -1,0 +1,35 @@
+.root {
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    padding: 2%;
+    font-family: "Montserrat", sans-serif;
+    max-width: 900px;
+    width: 100%;
+}
+
+.container h3,
+.container h4 {
+    text-align: center;
+}
+
+.container h4 {
+    margin-top: 30px;
+}
+
+.separator {
+    width: 5px;
+}
+
+.datepicker__container {
+    width: 100%;
+    display: flex;
+    margin: 10px 0px;
+}
+
+.button {
+    width: 100%;
+    margin: 0 !important;
+}

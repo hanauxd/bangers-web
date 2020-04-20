@@ -1,20 +1,33 @@
 .container {
-  width: 90%;
-  display: flex;
-  margin: 5% auto;
+    width: 90%;
+    display: flex;
+    margin: 5% auto;
 }
 
 .addUtility {
-  width: 30%;
-  height: fit-content;
-  padding: 3%;
-  box-shadow: 0 4px 8px 0 gray;
+    width: 30%;
+    height: fit-content;
+    padding: 3%;
+    box-shadow: 0 4px 8px 0 gray;
+    margin: 3%;
 }
 
 .utilityItems {
-  width: 70%;
-  padding: 0 2%;
-  display: flex;
-  flex-flow: wrap row;
-  justify-content: flex-start;
+    width: 70%;
+    padding: 2%;
+    display: flex;
+    flex-flow: wrap row;
+    justify-content: flex-start;
+}
+
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+    }
+    .addUtility {
+        width: 100%;
+    }
+    .utilityItems {
+        width: 100%;
+    }
 }
