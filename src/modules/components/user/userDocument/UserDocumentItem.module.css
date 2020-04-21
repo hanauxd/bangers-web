@@ -1,0 +1,6 @@
+.container {
+    border-bottom: 1px solid gray;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
