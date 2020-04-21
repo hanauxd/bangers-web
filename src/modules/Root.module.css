@@ -1,4 +1,7 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap");
+
 .container {
-  height: 100%;
-  box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+    height: 100%;
+    box-sizing: border-box;
 }
