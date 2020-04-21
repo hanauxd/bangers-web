@@ -4,35 +4,41 @@ import { ErrorMessage } from "formik";
 
 import styles from "./CustomDatePicker.module.css";
 
-const CustomDatePicker = props => {
+const CustomDatePicker = (props) => {
     const {
         fieldName,
+        placeholderText,
         value,
         selected,
+        showTimeSelect,
+        dateFormat,
         dateRange,
         isDisabled,
         onSetFieldValue,
         onSetFieldTouched,
         minHour,
-        maxHour
+        maxHour,
     } = props;
     return (
         <div className={styles.datepicker__child}>
             <DatePicker
                 className={styles.datepicker}
+                placeholderText={placeholderText}
                 disabled={isDisabled}
-                onChange={val => onSetFieldValue(val)}
+                onChange={(val) => onSetFieldValue(val)}
                 onBlur={() => onSetFieldTouched()}
                 value={value}
                 selected={selected}
-                showTimeSelect
-                dateFormat="Pp"
+                showTimeSelect={showTimeSelect}
+                dateFormat={dateFormat}
                 minTime={new Date().setHours(minHour, 0, 0)}
                 maxTime={new Date().setHours(maxHour, 0, 0)}
                 minDate={new Date(dateRange)}
                 maxDate={new Date(dateRange)}
             />
-            <ErrorMessage name={fieldName}>{message => <span style={{ color: "red" }}>{message}</span>}</ErrorMessage>
+            <ErrorMessage name={fieldName}>
+                {(message) => <span style={{ color: "red", fontSize: "0.8rem", marginTop: "5px" }}>{message}</span>}
+            </ErrorMessage>
         </div>
     );
 };

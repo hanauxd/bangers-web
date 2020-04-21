@@ -5,7 +5,7 @@ import makeAnimated from "react-select/animated";
 
 const animatedComponents = makeAnimated();
 
-const CustomSelect = props => {
+const CustomSelect = (props) => {
     const {
         fieldName,
         options,
@@ -14,14 +14,14 @@ const CustomSelect = props => {
         isDisabled,
         noOptionsMessage,
         onSetFieldValue,
-        onSetFieldTouched
+        onSetFieldTouched,
     } = props;
 
-    const applyStyles = base => {
+    const applyStyles = (base) => {
         return {
             ...base,
             borderRadius: 0,
-            padding: "5px 3px"
+            padding: "5px 3px",
         };
     };
 
@@ -29,7 +29,7 @@ const CustomSelect = props => {
         <div style={{ width: "100%" }}>
             <Select
                 styles={{
-                    control: base => applyStyles(base)
+                    control: (base) => applyStyles(base),
                 }}
                 onChange={onSetFieldValue}
                 onBlur={onSetFieldTouched}
@@ -40,7 +40,9 @@ const CustomSelect = props => {
                 options={options}
                 value={value}
             />
-            <ErrorMessage name={fieldName}>{message => <span style={{ color: "red" }}>{message}</span>}</ErrorMessage>
+            <ErrorMessage name={fieldName}>
+                {(message) => <span style={{ color: "red", fontSize: "0.8rem" }}>{message}</span>}
+            </ErrorMessage>
         </div>
     );
 };

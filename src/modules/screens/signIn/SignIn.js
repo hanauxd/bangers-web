@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { MDBBtn } from "mdbreact";
+import cogoToast from "cogo-toast";
 
 import { onSignIn } from "../../api/auth";
 import { authSuccess } from "./../../store/actions/auth";
@@ -11,39 +12,37 @@ import { InputField } from "../../components/index";
 
 import styles from "./SignIn.module.css";
 
-const SignIn = props => {
+const SignIn = (props) => {
     const history = useHistory();
 
     const initialValues = {
         username: "",
-        password: ""
+        password: "",
     };
 
     const signInSchema = Yup.object().shape({
-        username: Yup.string()
-            .email("Invalid email.")
-            .required("Email is required."),
-        password: Yup.string().required("Password is required.")
+        username: Yup.string().email("Invalid email.").required("Email is required."),
+        password: Yup.string().required("Password is required."),
     });
 
-    const handleSignIn = async values => {
+    const handleSignIn = async (values) => {
         try {
             const { username, password } = values;
             const result = await onSignIn({ username, password });
             localStorage.setItem("auth", JSON.stringify(result));
             props.onSuccess({ ...result });
             const {
-                location: { state }
+                location: { state },
             } = history;
             if (state && state.vehicleId) {
                 history.push("/", {
-                    ...state
+                    ...state,
                 });
             } else {
                 history.push("/");
             }
         } catch (error) {
-            console.log(error);
+            cogoToast.error("Failed to sign in.");
         }
     };
 
@@ -104,17 +103,17 @@ const SignIn = props => {
     );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
-        auth: state.auth.auth
+        auth: state.auth.auth,
     };
 };
 
-const mapDispactToProps = dispatch => {
+const mapDispactToProps = (dispatch) => {
     return {
-        onSuccess: authData => {
+        onSuccess: (authData) => {
             dispatch(authSuccess(authData));
-        }
+        },
     };
 };
 
