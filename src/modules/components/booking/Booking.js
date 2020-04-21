@@ -4,6 +4,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import * as moment from "moment";
 import { MDBBtn } from "mdbreact";
+import cogoToast from "cogo-toast";
 
 import { onFetchAvailableUtilities } from "../../api/utility";
 import { fetchVehicles } from "./../../api/vehicle";
@@ -17,16 +18,16 @@ const btnStyles = {
     color: "black",
     fontWeight: "bold",
     borderRadius: "0",
-    margin: "0 5px"
+    margin: "0 5px",
 };
 
 const checkboxStyles = {
     color: "white",
     textAlign: "left",
-    marginBottom: "12px"
+    marginBottom: "12px",
 };
 
-const Booking = props => {
+const Booking = (props) => {
     const auth = props.auth;
     const history = useHistory();
 
@@ -36,7 +37,7 @@ const Booking = props => {
         utils: [],
         vehicles: [],
         startDate: new Date(new Date().setHours(8, 0, 0)),
-        endDate: new Date(new Date().setHours(13, 0, 0))
+        endDate: new Date(new Date().setHours(13, 0, 0)),
     });
 
     useEffect(() => {
@@ -50,12 +51,12 @@ const Booking = props => {
             const result = await onFetchAvailableUtilities();
             setState({
                 loading: false,
-                utils: [...result]
+                utils: [...result],
             });
         } catch (error) {
             setState({
                 loading: false,
-                error: error.message
+                error: error.message,
             });
         }
     };
@@ -65,28 +66,28 @@ const Booking = props => {
             const result = await fetchVehicles();
             setState({
                 loading: false,
-                vehicles: [...result]
+                vehicles: [...result],
             });
         } catch (error) {
             setState({
                 loading: false,
-                error: error.message
+                error: error.message,
             });
         }
     };
 
-    const utilList = state.utils.map(util => ({
+    const utilList = state.utils.map((util) => ({
         value: util.utilityType,
-        label: util.utilityType
+        label: util.utilityType,
     }));
 
-    const vehicleList = state.vehicles.map(vehicle => ({
+    const vehicleList = state.vehicles.map((vehicle) => ({
         value: vehicle.id,
-        label: `${vehicle.brand} ${vehicle.model}`
+        label: `${vehicle.brand} ${vehicle.model}`,
     }));
 
     const {
-        location: { state: historyState }
+        location: { state: historyState },
     } = history;
 
     const initialValues = {
@@ -94,31 +95,25 @@ const Booking = props => {
         endDate: historyState && historyState.endDate ? historyState.endDate : state.endDate,
         utilities: historyState && historyState.utilities ? [...historyState.utilities] : [],
         vehicleId: historyState && historyState.vehicleId ? historyState.vehicleId : null,
-        lateReturn: historyState && historyState.lateReturn ? historyState.lateReturn : false
+        lateReturn: historyState && historyState.lateReturn ? historyState.lateReturn : false,
     };
 
     const bookingSchema = Yup.object().shape({
         startDate: Yup.date().required("Select a pick up date."),
         endDate: Yup.date().required("Select a return date."),
-        vehicleId: Yup.string()
-            .typeError("Select a vehicle.")
-            .required("Select a vehicle.")
+        vehicleId: Yup.string().typeError("Select a vehicle.").required("Select a vehicle."),
     });
 
     const handleBooking = async (values, { resetForm }) => {
-        const utcStartDate = moment(values.startDate)
-            .utc()
-            .format("YYYY-MM-DD HH:mm:ss");
-        const utcEndDate = moment(values.endDate)
-            .utc()
-            .format("YYYY-MM-DD HH:mm:ss");
+        const utcStartDate = moment(values.startDate).utc().format("YYYY-MM-DD HH:mm:ss");
+        const utcEndDate = moment(values.endDate).utc().format("YYYY-MM-DD HH:mm:ss");
         const booking = {
             startDate: utcStartDate,
             endDate: utcEndDate,
             status: "Confirmed",
             vehicleId: values.vehicleId.value,
-            utilities: values.utilities.map(ut => ut.value),
-            lateReturn: values.lateReturn
+            utilities: values.utilities.map((ut) => ut.value),
+            lateReturn: values.lateReturn,
         };
         try {
             if (auth === null) {
@@ -131,9 +126,9 @@ const Booking = props => {
         } catch (error) {
             if (error.request !== null) {
                 const msg = JSON.parse(error.request.response).message;
-                alert(msg);
+                cogoToast.error(msg);
             } else {
-                console.log("[BOOKING FAILED]", error.message);
+                cogoToast.error("Failed to make booking.");
             }
         }
     };
@@ -171,9 +166,10 @@ const Booking = props => {
                                                 value={values.startDate}
                                                 selected={values.startDate}
                                                 dateFormat="Pp"
+                                                showTimeSelect={true}
                                                 minHour={8}
                                                 maxHour={18}
-                                                onSetFieldValue={value => setFieldValue("startDate", value)}
+                                                onSetFieldValue={(value) => setFieldValue("startDate", value)}
                                                 onSetFieldTouched={() => setFieldTouched("startDate")}
                                             />
                                         </div>
@@ -183,10 +179,11 @@ const Booking = props => {
                                                 fieldName="endDate"
                                                 value={values.endDate}
                                                 selected={values.endDate}
+                                                showTimeSelect={true}
                                                 dateFormat="Pp"
                                                 minHour={8}
                                                 maxHour={18}
-                                                onSetFieldValue={value => setFieldValue("endDate", value)}
+                                                onSetFieldValue={(value) => setFieldValue("endDate", value)}
                                                 onSetFieldTouched={() => setFieldTouched("endDate")}
                                             />
                                         </div>
@@ -197,7 +194,7 @@ const Booking = props => {
                                             value={values.vehicleId}
                                             options={vehicleList}
                                             isMulti={false}
-                                            onSetFieldValue={value => setFieldValue("vehicleId", value)}
+                                            onSetFieldValue={(value) => setFieldValue("vehicleId", value)}
                                             onSetFieldTouched={() => {
                                                 setFieldTouched("vehicleId");
                                             }}
@@ -209,7 +206,7 @@ const Booking = props => {
                                             options={utilList}
                                             value={values.utilities}
                                             isMulti={true}
-                                            onSetFieldValue={value => setFieldValue("utilities", value)}
+                                            onSetFieldValue={(value) => setFieldValue("utilities", value)}
                                             onSetFieldTouched={() => {
                                                 setFieldTouched("utilities");
                                             }}
