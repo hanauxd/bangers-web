@@ -1,8 +1,39 @@
 .container {
-  padding: 4%;
-  text-align: center;
+    text-align: center;
 }
 
 .container span {
-  font-size: 1.8rem;
+    font-size: 1.8rem;
+}
+
+.inner__container {
+    display: flex;
+}
+
+.image__div {
+    display: flex;
+    flex-direction: column;
+}
+
+.image {
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+}
+
+.imageUpload {
+    padding: 8px;
+    background: white;
+    border-radius: 50%;
+}
+
+@media (max-width: 900px) {
+    .inner__container {
+        flex-direction: column;
+    }
+
+    .image__div {
+        display: inline;
+    }
 }
