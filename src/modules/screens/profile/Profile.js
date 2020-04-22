@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import cogoToast from "cogo-toast";
 
 import { useCustomState } from "./../../helpers/hooks";
-import { onFetchUser, onUploadUserDocuments, onDeleteUserDocument } from "../../api/user";
+import { onFetchUser, onUploadUserDocuments, onDeleteUserDocument, onUploadProfileImage } from "../../api/user";
 import { Profile as ProfileDetails, UserDocument, UserDocumentItem, Spinner } from "./../../components";
 
 import styles from "./Profile.module.css";
@@ -73,6 +73,20 @@ const Profile = (props) => {
         }
     };
 
+    const handleUploadProfileImage = async (file) => {
+        try {
+            const token = props.auth.jwt;
+            const result = await onUploadProfileImage(file, token);
+            setState({
+                user: { ...result },
+            });
+        } catch (error) {
+            const msg = JSON.parse(error.request.response);
+            console.log(msg.message);
+            cogoToast.error("Failed to upload profile image.");
+        }
+    };
+
     const renderError = () => {
         return <div>{state.error}</div>;
     };
@@ -84,7 +98,7 @@ const Profile = (props) => {
 
         return (
             <div className={styles.container}>
-                <ProfileDetails user={state.user} />
+                <ProfileDetails uploadProfileImage={handleUploadProfileImage} user={state.user} />
                 <div className={styles.form__div}>
                     <UserDocument onUploadDocument={handleUploadUserDocument} />
                     <span style={{ color: "red", fontSize: "0.8rem", marginTop: "10px" }}>
