@@ -14,6 +14,13 @@ export const onUploadUserDocuments = (values, token) => {
     return post(endpoint, formData, token);
 };
 
+export const onUploadProfileImage = (file, token) => {
+    const endpoint = "users/profile-image";
+    let formData = new FormData();
+    formData.append("file", file);
+    return post(endpoint, formData, token);
+};
+
 export const onDeleteUserDocument = (id, token) => {
     const endpoint = `user-documents/${id}`;
     return remove(endpoint, token);
