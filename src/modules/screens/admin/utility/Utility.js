@@ -7,11 +7,11 @@ import { onAddUtility, onFetchUtilities, onUpdateUtility } from "../../../api/ut
 
 import styles from "./Utility.module.css";
 
-const Utility = props => {
+const Utility = (props) => {
     const [state, setState] = useCustomState({
         utilities: [],
         loading: true,
-        error: null
+        error: null,
     });
 
     useEffect(() => {
@@ -24,21 +24,21 @@ const Utility = props => {
             const result = await onFetchUtilities(props.auth.jwt);
             setState({
                 loading: false,
-                utilities: [...result]
+                utilities: [...result],
             });
         } catch (error) {
             setState({
                 loading: false,
-                error: error.message
+                error: error.message,
             });
         }
     };
 
-    const addUtility = async values => {
+    const addUtility = async (values) => {
         try {
             const result = await onAddUtility(values, props.auth.jwt);
             setState({
-                utilities: [...result]
+                utilities: [...result],
             });
         } catch (error) {
             const message = JSON.parse(error.request.response).message;
@@ -46,11 +46,11 @@ const Utility = props => {
         }
     };
 
-    const updateUtility = async values => {
+    const updateUtility = async (values) => {
         try {
             const result = await onUpdateUtility(values, props.auth.jwt);
             setState({
-                utilities: [...result]
+                utilities: [...result],
             });
         } catch (error) {
             const message = JSON.parse(error.request.response).message;
@@ -63,13 +63,14 @@ const Utility = props => {
     };
 
     const renderUtilities = () => {
-        const utilities = state.utilities.map(util => {
+        const utilities = state.utilities.map((util) => {
             return <UtilityItem key={util.id} utility={util} handleUpdateUtility={updateUtility} />;
         });
         return (
             <div className={styles.container}>
-                <div className={styles.addUtility}>
+                <div className={styles.form__div}>
                     <AddUtility handleAddUtility={addUtility} />
+                    <hr />
                 </div>
                 <div className={styles.utilityItems}>{utilities}</div>
             </div>
@@ -79,9 +80,9 @@ const Utility = props => {
     return state.loading ? <Spinner /> : state.error ? renderError() : renderUtilities();
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
-        auth: state.auth.auth
+        auth: state.auth.auth,
     };
 };
 
