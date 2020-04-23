@@ -7,11 +7,11 @@ import { VehicleItem, AddVehicle, Spinner } from "../../../components";
 
 import styles from "./Vehicle.module.css";
 
-const Vehicle = props => {
+const Vehicle = (props) => {
     const [state, setState] = useCustomState({
         loading: true,
         error: null,
-        vehicles: []
+        vehicles: [],
     });
 
     useEffect(() => {
@@ -24,12 +24,12 @@ const Vehicle = props => {
             const result = await fetchVehicles();
             setState({
                 loading: false,
-                vehicles: [...result]
+                vehicles: [...result],
             });
         } catch (error) {
             setState({
                 loading: false,
-                error: error.message
+                error: error.message,
             });
         }
     };
@@ -39,7 +39,7 @@ const Vehicle = props => {
             const token = props.auth.jwt;
             const result = await addVehicle(vehicle, files, token);
             setState({
-                vehicles: [...result]
+                vehicles: [...result],
             });
         } catch (error) {
             const message = JSON.parse(error.request.response).message;
@@ -52,7 +52,7 @@ const Vehicle = props => {
     };
 
     const renderVehiclePage = () => {
-        const vehicles = state.vehicles.map(vehicle => <VehicleItem key={vehicle.id} vehicle={vehicle} />);
+        const vehicles = state.vehicles.map((vehicle) => <VehicleItem key={vehicle.id} vehicle={vehicle} />);
         return (
             <div className={styles.container}>
                 {props.auth !== null && props.auth.userRole === "ROLE_ADMIN" ? (
@@ -68,9 +68,9 @@ const Vehicle = props => {
     return state.loading ? <Spinner /> : state.error ? renderError() : renderVehiclePage();
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
-        auth: state.auth.auth
+        auth: state.auth.auth,
     };
 };
 
