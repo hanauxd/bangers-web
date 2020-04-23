@@ -3,3 +3,30 @@ h3 {
     margin-top: 10px;
     font-family: "Montserrat", sans-serif;
 }
+
+.container {
+    display: flex;
+    align-content: space-between;
+}
+
+.form__div {
+    flex: 2;
+}
+
+.imageZone__div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    padding: 5px 0 8px 0;
+}
+
+.separator {
+    width: 50px;
+}
+
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+    }
+}
