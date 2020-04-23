@@ -1,19 +1,7 @@
 .container {
-    width: 250px;
-    height: fit-content;
-    margin: 2%;
-    padding: 3%;
-    box-shadow: 0 4px 8px 0 gray;
-    text-align: center;
-    font-family: "Montserrat", sans-serif;
-}
-
-.container h3 {
-    margin-top: 10px;
-    font-size: x-large;
-}
-
-.container span {
-    display: block;
-    margin-bottom: 10px;
+    display: flex;
+    padding: 5px 0;
+    margin-top: 8px;
+    align-items: center;
+    border-bottom: 1px solid #dddddd;
 }
