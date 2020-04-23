@@ -81,9 +81,12 @@ const Profile = (props) => {
                 user: { ...result },
             });
         } catch (error) {
-            const msg = JSON.parse(error.request.response);
-            console.log(msg.message);
-            cogoToast.error("Failed to upload profile image.");
+            if (error.request.response) {
+                const msg = JSON.parse(error.request.response);
+                cogoToast.error(msg);
+            } else {
+                cogoToast.error(error.message);
+            }
         }
     };
 
