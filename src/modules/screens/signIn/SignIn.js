@@ -54,40 +54,42 @@ const SignIn = (props) => {
         <Formik initialValues={initialValues} onSubmit={handleSignIn} validationSchema={signInSchema}>
             {({ values, handleChange, handleBlur }) => {
                 return (
-                    <Form>
+                    <Form className={styles.form__div}>
                         <div className={styles.container}>
                             <div className={styles.content}>
                                 <div className={styles.title}>
                                     <span>SIGN IN</span>
                                 </div>
-                                <InputField
-                                    icon="envelope"
-                                    label="Email"
-                                    type="email"
-                                    name="username"
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    values={values.username}
-                                />
-                                <InputField
-                                    icon="lock"
-                                    label="Password"
-                                    type="password"
-                                    name="password"
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    values={values.password}
-                                />
-                                <div className={styles.button}>
+                                <div>
+                                    <InputField
+                                        icon="envelope"
+                                        label="Email"
+                                        type="email"
+                                        name="username"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        values={values.username}
+                                    />
+                                    <InputField
+                                        icon="lock"
+                                        label="Password"
+                                        type="password"
+                                        name="password"
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        values={values.password}
+                                    />
+                                </div>
+                                <div>
                                     <MDBBtn block color="black" type="submit">
                                         SIGN IN
                                     </MDBBtn>
-                                </div>
-                                <div className={styles.signUpText}>
-                                    <span>Don't have an account? </span>
-                                    <span onClick={handleRegister} className={styles.signUpLink}>
-                                        Create
-                                    </span>
+                                    <div className={styles.signUpText}>
+                                        <span>Don't have an account? </span>
+                                        <span onClick={handleRegister} className={styles.signUpLink}>
+                                            Create
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div className={styles.logo}>
