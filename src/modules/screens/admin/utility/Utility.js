@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import cogoToast from "cogo-toast";
 
 import { AddUtility, UtilityItem, Spinner } from "../../../components";
 import { useCustomState } from "./../../../helpers/hooks";
@@ -42,7 +43,7 @@ const Utility = (props) => {
             });
         } catch (error) {
             const message = JSON.parse(error.request.response).message;
-            alert(message);
+            cogoToast.error(message);
         }
     };
 
@@ -54,7 +55,7 @@ const Utility = (props) => {
             });
         } catch (error) {
             const message = JSON.parse(error.request.response).message;
-            alert(message);
+            cogoToast.error(message);
         }
     };
 

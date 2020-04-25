@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import cogoToast from "cogo-toast";
 
 import { useCustomState } from "./../../../helpers/hooks";
 import { fetchVehicles, addVehicle } from "../../../api/vehicle";
@@ -43,7 +44,7 @@ const Vehicle = (props) => {
             });
         } catch (error) {
             const message = JSON.parse(error.request.response).message;
-            alert(message);
+            cogoToast.error(message);
         }
     };
 

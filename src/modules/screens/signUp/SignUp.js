@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { MDBBtn } from "mdbreact";
+import cogoToast from "cogo-toast";
 
 import { onSignUp } from "../../api/auth";
 import { InputField } from "../../components";
@@ -51,7 +52,7 @@ const SignUp = (props) => {
             history.push("/login");
         } catch (error) {
             if (error.request.status === 400) {
-                alert("Email address already exist.");
+                cogoToast.error("Email address already exist.");
             }
         }
     };

@@ -4,6 +4,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import * as moment from "moment";
 import { MDBBtn } from "mdbreact";
+import cogoToast from "cogo-toast";
 
 import { extendBooking, updateUtilities } from "./../../../api/booking";
 import { CustomDatePicker, CustomSelect, BookingDetails } from "./../../index";
@@ -31,8 +32,8 @@ const ExtendBookingForm = (props) => {
             await extendBooking(updatedBooking, token);
             history.push("/bookings");
         } catch (error) {
-            const err = JSON.parse(error.request.response);
-            alert(err.message);
+            const message = JSON.parse(error.request.response).message;
+            cogoToast.error(message);
         }
     };
 
@@ -48,8 +49,8 @@ const ExtendBookingForm = (props) => {
             await updateUtilities(updatedBooking, token);
             history.push("/bookings");
         } catch (error) {
-            const err = JSON.parse(error.request.response);
-            alert(err.message);
+            const message = JSON.parse(error.request.response).message;
+            cogoToast.error(message);
         }
     };
 
