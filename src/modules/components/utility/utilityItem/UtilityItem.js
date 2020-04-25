@@ -8,45 +8,57 @@ import { InputField } from "../../index";
 
 import styles from "./UtilityItem.module.css";
 
-const UtilityItem = props => {
+const UtilityItem = (props) => {
     const {
         utility: { utilityType, quantity },
-        handleUpdateUtility
+        handleUpdateUtility,
     } = props;
 
     const [state, setState] = useCustomState({
-        isOpen: false
+        isOpen: false,
     });
 
     const toggle = () => {
         setState({
-            isOpen: !state.isOpen
+            isOpen: !state.isOpen,
         });
     };
 
     const initialValues = {
-        quantity: ""
+        quantity: "",
     };
 
     const utilitySchema = Yup.object().shape({
-        quantity: Yup.number()
-            .min(1, "Quantity cannot be less than 1.")
-            .required("Quantity is required.")
+        quantity: Yup.number().min(1, "Quantity cannot be less than 1.").required("Quantity is required."),
     });
 
-    const handleUpdate = values => {
+    const handleUpdate = (values) => {
         values.utilityType = utilityType;
         handleUpdateUtility(values);
         toggle();
     };
 
+    const item = (label, value) => {
+        return (
+            <div style={{ flex: 1 }}>
+                <div style={{ fontSize: "0.8rem" }}>{label}</div>
+                <div style={{ fontWeight: "bold" }}>{value}</div>
+            </div>
+        );
+    };
+
     return (
-        <div className={styles.container}>
-            <h3>{utilityType}</h3>
-            <span>Quantity: {quantity}</span>
-            <MDBBtn style={{ margin: "0" }} block color="mdb-color darken-3" size="sm" onClick={toggle}>
-                UPDATE
-            </MDBBtn>
+        <div>
+            <div className={styles.container}>
+                {item("Type", utilityType)}
+                {item("Quantity", quantity)}
+                <div>
+                    <MDBBtn style={{ margin: "0" }} block color="mdb-color darken-3" size="sm" onClick={toggle}>
+                        UPDATE
+                    </MDBBtn>
+                </div>
+            </div>
+
             <Formik initialValues={initialValues} onSubmit={handleUpdate} validationSchema={utilitySchema}>
                 {({ handleChange, handleBlur, values }) => {
                     return (

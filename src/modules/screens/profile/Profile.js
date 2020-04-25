@@ -1,17 +1,20 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import cogoToast from "cogo-toast";
 
 import { useCustomState } from "./../../helpers/hooks";
-import { onFetchUser, onUploadUserDocuments } from "../../api/user";
+import { onFetchUser, onUploadUserDocuments, onDeleteUserDocument, onUploadProfileImage } from "../../api/user";
 import { Profile as ProfileDetails, UserDocument, UserDocumentItem, Spinner } from "./../../components";
 
 import styles from "./Profile.module.css";
 
-const Profile = props => {
+const Profile = (props) => {
     const [state, setState] = useCustomState({
         loading: true,
         error: null,
-        user: null
+        user: null,
+        documentList: [],
+        documentError: "",
     });
 
     useEffect(() => {
@@ -25,25 +28,65 @@ const Profile = props => {
             const result = await onFetchUser(token);
             setState({
                 loading: false,
-                user: { ...result }
+                user: { ...result },
+                documentList: [...result.documents],
             });
         } catch (error) {
             setState({
                 loading: false,
-                error: error.message
+                error: error.message,
             });
         }
     };
 
-    const handleUploadUserDocument = async files => {
+    const handleUploadUserDocument = async (values) => {
         try {
-            const token = props.auth.jwt;
-            const result = await onUploadUserDocuments(files, token);
             setState({
-                user: { ...result }
+                documentError: "",
+            });
+            const token = props.auth.jwt;
+            const result = await onUploadUserDocuments(values, token);
+            setState({
+                user: { ...result },
+                documentList: [...result.documents],
             });
         } catch (error) {
-            console.log(error.message);
+            if (error.request != null) {
+                setState({
+                    documentError: JSON.parse(error.request.response),
+                });
+            } else {
+                cogoToast.error("Failed to upload document.");
+            }
+        }
+    };
+
+    const handleRemoveDocument = async (id) => {
+        try {
+            const token = props.auth.jwt;
+            const result = await onDeleteUserDocument(id, token);
+            setState({
+                documentList: [...result],
+            });
+        } catch (error) {
+            cogoToast.error("Failed to remove document.");
+        }
+    };
+
+    const handleUploadProfileImage = async (file) => {
+        try {
+            const token = props.auth.jwt;
+            const result = await onUploadProfileImage(file, token);
+            setState({
+                user: { ...result },
+            });
+        } catch (error) {
+            if (error.request.response) {
+                const msg = JSON.parse(error.request.response);
+                cogoToast.error(msg);
+            } else {
+                cogoToast.error(error.message);
+            }
         }
     };
 
@@ -52,26 +95,25 @@ const Profile = props => {
     };
 
     const renderUserProfile = () => {
-        const imageList = state.user.documents.map(img => (
-            <UserDocumentItem key={img.id} media={{ image: img, styles: styles.img }} />
+        const imageList = state.documentList.map((doc) => (
+            <UserDocumentItem removeDocument={handleRemoveDocument} key={doc.id} document={doc} />
         ));
 
         return (
             <div className={styles.container}>
-                <div className={styles.profile__div}>
-                    <ProfileDetails user={state.user} />
+                <ProfileDetails uploadProfileImage={handleUploadProfileImage} user={state.user} />
+                <div className={styles.form__div}>
+                    <UserDocument onUploadDocument={handleUploadUserDocument} />
+                    <span style={{ color: "red", fontSize: "0.8rem", marginTop: "10px" }}>
+                        {state.documentError.message}
+                    </span>
                 </div>
-                <div className={styles.documents__div}>
-                    <div className={styles.form__div}>
-                        <UserDocument onUploadDocument={handleUploadUserDocument} />
-                    </div>
-                    <div className={styles.image__div}>
-                        {state.user.documents.length > 0 ? (
-                            <div style={{ display: "flex", flexFlow: "wrap row" }}>{imageList.reverse()}</div>
-                        ) : (
-                            <div>No Documents</div>
-                        )}
-                    </div>
+                <div className={styles.documentList__div}>
+                    {state.documentList.length > 0 ? (
+                        <div style={{ display: "flex", flexDirection: "column" }}>{imageList.reverse()}</div>
+                    ) : (
+                        <div>No Documents</div>
+                    )}
                 </div>
             </div>
         );
@@ -80,9 +122,9 @@ const Profile = props => {
     return state.loading ? <Spinner /> : state.error ? renderError() : renderUserProfile();
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
-        auth: state.auth.auth
+        auth: state.auth.auth,
     };
 };
 

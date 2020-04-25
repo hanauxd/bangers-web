@@ -3,6 +3,7 @@ import { withRouter, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { MDBBtn } from "mdbreact";
 import { Formik, Form } from "formik";
+import cogoToast from "cogo-toast";
 
 import { confirmedOptions, collectedOptions } from "./BookingStatus";
 import { useCustomState } from "./../../../../helpers/hooks";
@@ -11,19 +12,19 @@ import { CustomSelect, Spinner, BookingDetails } from "../../../../components/in
 
 import styles from "./UpdateBooking.module.css";
 
-const UpdateBooking = props => {
+const UpdateBooking = (props) => {
     const history = useHistory();
 
     const {
         match: {
-            params: { id }
-        }
+            params: { id },
+        },
     } = props;
 
     const [state, setState] = useCustomState({
         loading: true,
         error: null,
-        booking: null
+        booking: null,
     });
 
     useEffect(() => {
@@ -37,12 +38,12 @@ const UpdateBooking = props => {
             const result = await fetchBookingById(id, token);
             setState({
                 loading: false,
-                booking: { ...result }
+                booking: { ...result },
             });
         } catch (error) {
             setState({
                 loading: false,
-                error: error.message
+                error: error.message,
             });
         }
     };
@@ -58,18 +59,18 @@ const UpdateBooking = props => {
             ? collectedOptions
             : [];
 
-    const handleUpdateBooking = async values => {
+    const handleUpdateBooking = async (values) => {
         try {
             const token = props.auth.jwt;
             const booking = {
                 id: state.booking.id,
-                status: values.status.value
+                status: values.status.value,
             };
             await updateBooking(booking, token);
             history.push("/admin/bookings");
         } catch (error) {
             const msg = JSON.parse(error.request.response);
-            console.log(msg);
+            cogoToast.error(msg.message);
         }
     };
 
@@ -79,7 +80,7 @@ const UpdateBooking = props => {
         return (
             <Formik
                 initialValues={{
-                    status: state.booking.status
+                    status: state.booking.status,
                 }}
                 onSubmit={handleUpdateBooking}
             >
@@ -93,7 +94,7 @@ const UpdateBooking = props => {
                                     <CustomSelect
                                         fieldName="status"
                                         noOptionsMessage={() => "Cannot update booking status"}
-                                        onSetFieldValue={value => {
+                                        onSetFieldValue={(value) => {
                                             setFieldValue("status", value);
                                         }}
                                         onSetFieldTouched={() => {
@@ -105,7 +106,11 @@ const UpdateBooking = props => {
                                 </div>
                                 <MDBBtn
                                     disabled={
-                                        booking.status === "Returned" || booking.status === "Failed" ? true : false
+                                        booking.status === "Returned" ||
+                                        booking.status === "Failed" ||
+                                        booking.status === "Refused"
+                                            ? true
+                                            : false
                                     }
                                     className={styles.update__btn}
                                     type="submit"
@@ -125,9 +130,9 @@ const UpdateBooking = props => {
     return state.loading ? <Spinner /> : state.error ? renderError() : renderBookingDetails();
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
-        auth: state.auth.auth
+        auth: state.auth.auth,
     };
 };
 

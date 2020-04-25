@@ -4,7 +4,7 @@ import { ErrorMessage } from "formik";
 
 import "./InputField.css";
 
-const InputField = props => {
+const InputField = (props) => {
     const { styleClass, label, icon, name, type, values, onChange, onBlur } = props;
     return (
         <div style={styleClass}>
@@ -19,7 +19,7 @@ const InputField = props => {
                 outline
             />
             <ErrorMessage name={name}>
-                {message => (
+                {(message) => (
                     <span style={{ color: "red", fontSize: "0.8rem", marginBottom: "5px", display: "block" }}>
                         {message}
                     </span>

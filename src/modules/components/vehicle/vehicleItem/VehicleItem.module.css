@@ -1,10 +1,9 @@
 .container {
-    margin: 0 2% 2%;
     width: 22rem;
     height: max-content;
     padding: 1%;
-    box-shadow: 0 4px 8px 0 gray;
-    font-family: "Montserrat", sans-serif;
+    border: 1px solid #cccccc;
+    margin-bottom: 12px;
 }
 
 .container h3 {
@@ -15,6 +14,12 @@
 .image__div {
     margin-bottom: 3%;
     width: 100%;
+}
+
+.img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
 }
 
 .price__span {

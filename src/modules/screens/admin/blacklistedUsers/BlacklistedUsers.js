@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { MDBBtn } from "mdbreact";
+import cogoToast from "cogo-toast";
 
 import { useCustomState } from "../../../helpers/hooks";
 import { Spinner } from "../../../components/index";
@@ -8,11 +9,11 @@ import { onGetBlacklistedUsers, onUnblockUser } from "../../../api/user";
 
 import styles from "./BlacklistedUsers.module.css";
 
-const BlacklistedUsers = props => {
+const BlacklistedUsers = (props) => {
     const [state, setState] = useCustomState({
         blacklistedUsers: [],
         loading: true,
-        error: null
+        error: null,
     });
     useEffect(() => {
         fetchBlacklistedUsers();
@@ -25,34 +26,34 @@ const BlacklistedUsers = props => {
             const result = await onGetBlacklistedUsers(token);
             setState({
                 loading: false,
-                blacklistedUsers: [...result]
+                blacklistedUsers: [...result],
             });
         } catch (error) {
             setState({
                 loading: false,
-                error: error.message
+                error: error.message,
             });
         }
     };
 
-    const handleUnblockUser = async userId => {
+    const handleUnblockUser = async (userId) => {
         try {
             const token = props.auth.jwt;
             const result = await onUnblockUser(userId, token);
             setState({
-                blacklistedUsers: [...result]
+                blacklistedUsers: [...result],
             });
         } catch (error) {
-            console.log("[UNBLOCK USER FAILED]", error.message);
+            cogoToast.error("Failed to unblock the user.");
         }
     };
 
-    const blacklistedUser = user => {
+    const blacklistedUser = (user) => {
         return (
             <div className={styles.blacklistedUser} key={user.id}>
                 <div className={styles.blacklistedUser__block}>
                     <span>Customer Name</span>
-                    {user.firstName} {user.lastName}
+                    {user.fullName}
                 </div>
                 <div className={styles.blacklistedUser__block}>
                     <span>Email</span>
@@ -83,7 +84,7 @@ const BlacklistedUsers = props => {
         const blacklistedUserList = !state.blacklistedUsers.length ? (
             <h5>No users blacklisted</h5>
         ) : (
-            state.blacklistedUsers.map(user => blacklistedUser(user))
+            state.blacklistedUsers.map((user) => blacklistedUser(user))
         );
         return (
             <div className={styles.container}>
@@ -96,9 +97,9 @@ const BlacklistedUsers = props => {
     return state.loading ? <Spinner /> : state.error ? renderError() : renderBlacklistedUsers();
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
-        auth: state.auth.auth
+        auth: state.auth.auth,
     };
 };
 

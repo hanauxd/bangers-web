@@ -1,30 +1,15 @@
 .container {
-    display: flex;
-    width: 90%;
-    padding: 0 2%;
-    margin: 3% auto;
+    max-width: 1500px;
+    margin: auto;
+    padding: 2%;
 }
 
 .form__div {
-    width: 40%;
-    margin: 2%;
+    margin-bottom: 3%;
 }
 
 .items__div {
-    width: 60%;
-    margin: 2%;
     display: flex;
-    flex-flow: wrap row;
-}
-
-@media (max-width: 900px) {
-    .container {
-        flex-direction: column;
-    }
-    .form__div {
-        width: 100%;
-    }
-    .items__div {
-        width: 100%;
-    }
+    flex-flow: row wrap;
+    justify-content: space-between;
 }

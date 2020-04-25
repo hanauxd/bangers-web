@@ -2,16 +2,16 @@ import React from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import { Form as FileForm, DropZone } from "react-formik-ui";
-import { MDBBtn, MDBCard, MDBCardBody, MDBCardFooter } from "mdbreact";
+import { MDBBtn } from "mdbreact";
 
 import { InputField } from "../../index";
 
 import styles from "./AddVehicle.module.css";
 
-const AddVehicle = props => {
+const AddVehicle = (props) => {
     const styleClass = {
         width: "50%",
-        margin: "0 2%"
+        marginRight: "8px",
     };
     const initialValues = {
         license: "",
@@ -23,7 +23,7 @@ const AddVehicle = props => {
         category: "",
         size: "",
         price: "",
-        files: []
+        files: [],
     };
 
     const vehicleSchema = Yup.object().shape({
@@ -36,10 +36,10 @@ const AddVehicle = props => {
         category: Yup.string().required("Category is required."),
         size: Yup.string().required("Size is required."),
         price: Yup.number().required("Unit price is required."),
-        files: Yup.array().required("Files required.")
+        files: Yup.array().required("Files required."),
     });
 
-    const handleAddVehicle = values => {
+    const handleAddVehicle = (values) => {
         const vehicle = {
             license: values.license,
             description: values.description,
@@ -49,7 +49,7 @@ const AddVehicle = props => {
             transmissionType: values.transmissionType,
             category: values.category,
             size: values.size,
-            price: values.price
+            price: values.price,
         };
         const files = values.files;
         props.onAddVehicle(vehicle, files);
@@ -60,9 +60,10 @@ const AddVehicle = props => {
             {({ handleChange, handleBlur, values }) => {
                 return (
                     <Form>
-                        <MDBCard>
-                            <MDBCardBody>
-                                <h3 className={styles.header}>Add New Vehicle</h3>
+                        <h3 className={styles.header}>Add New Vehicle</h3>
+                        <hr />
+                        <div className={styles.container}>
+                            <div className={styles.form__div}>
                                 <div style={{ display: "flex" }}>
                                     <InputField
                                         styleClass={styleClass}
@@ -143,9 +144,9 @@ const AddVehicle = props => {
                                         values={values.model}
                                     />
                                 </div>
-                                <div style={{ display: "flex" }}>
+                                <div style={{ display: "flex", marginRight: "8px" }}>
                                     <InputField
-                                        styleClass={{ width: "100%", margin: "0 2%" }}
+                                        styleClass={{ width: "100%" }}
                                         label="Description"
                                         type="text"
                                         name="description"
@@ -154,25 +155,23 @@ const AddVehicle = props => {
                                         values={values.description}
                                     />
                                 </div>
-                                <div style={{ margin: "3% 2%" }}>
-                                    <FileForm>
-                                        <DropZone
-                                            lable="Upload images"
-                                            name="files"
-                                            placeholder="Browse or drag and drop the images here."
-                                            withClearButton
-                                        />
-                                    </FileForm>
-                                </div>
-                            </MDBCardBody>
-                            <MDBCardFooter>
-                                <div style={{ width: "33%", float: "right" }}>
-                                    <MDBBtn block type="submit" color="mdb-color darken-3">
-                                        SAVE
-                                    </MDBBtn>
-                                </div>
-                            </MDBCardFooter>
-                        </MDBCard>
+                            </div>
+                            <div className={styles.separator} />
+                            <div className={styles.imageZone__div}>
+                                <FileForm>
+                                    <DropZone
+                                        style={{ height: "300px" }}
+                                        lable="Upload images"
+                                        name="files"
+                                        placeholder="Browse or drag and drop the images here."
+                                        withClearButton
+                                    />
+                                </FileForm>
+                                <MDBBtn type="submit" color="mdb-color darken-3" style={{ margin: "0" }}>
+                                    SAVE
+                                </MDBBtn>
+                            </div>
+                        </div>
                     </Form>
                 );
             }}

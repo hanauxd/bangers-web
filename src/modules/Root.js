@@ -14,7 +14,7 @@ import {
     BookingHistory,
     Booking,
     UpdateBooking,
-    BlacklistedUsers
+    BlacklistedUsers,
 } from "./screens";
 
 import styles from "./Root.module.css";
@@ -22,7 +22,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 
-const Root = props => {
+const Root = (props) => {
     useEffect(() => {
         const auth = JSON.parse(localStorage.getItem("auth"));
         props.onSuccess(auth);
@@ -78,18 +78,18 @@ const Root = props => {
     );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
         auth: state.auth.auth,
-        authCheckLoading: state.auth.authCheckLoading
+        authCheckLoading: state.auth.authCheckLoading,
     };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        onSuccess: authData => {
+        onSuccess: (authData) => {
             dispatch(authSuccess(authData));
-        }
+        },
     };
 };
 

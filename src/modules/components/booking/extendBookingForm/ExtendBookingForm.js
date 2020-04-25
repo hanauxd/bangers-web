@@ -4,28 +4,27 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import * as moment from "moment";
 import { MDBBtn } from "mdbreact";
+import cogoToast from "cogo-toast";
 
 import { extendBooking, updateUtilities } from "./../../../api/booking";
 import { CustomDatePicker, CustomSelect, BookingDetails } from "./../../index";
 
 import styles from "./ExtendBookingForm.module.css";
 
-const ExtendBookingForm = props => {
+const ExtendBookingForm = (props) => {
     const history = useHistory();
     const { booking, utilities } = props;
     const extendBookingSchema = Yup.object().shape({
-        endDate: Yup.date().required("Select vehicle return date.")
+        endDate: Yup.date().required("Select vehicle return date."),
     });
 
-    const handleExtendBooking = async values => {
-        const utcEndDate = moment(values.endDate)
-            .utc()
-            .format("YYYY-MM-DD HH:mm:ss");
+    const handleExtendBooking = async (values) => {
+        const utcEndDate = moment(values.endDate).utc().format("YYYY-MM-DD HH:mm:ss");
 
         const updatedBooking = {
             id: booking.id,
             vehicleId: booking.vehicle.id,
-            endDate: utcEndDate
+            endDate: utcEndDate,
         };
 
         try {
@@ -33,16 +32,16 @@ const ExtendBookingForm = props => {
             await extendBooking(updatedBooking, token);
             history.push("/bookings");
         } catch (error) {
-            const err = JSON.parse(error.request.response);
-            alert(err.message);
+            const message = JSON.parse(error.request.response).message;
+            cogoToast.error(message);
         }
     };
 
-    const handleUpdateUtils = async values => {
-        const bookingUtils = values.utils !== null ? values.utils.map(item => item.value) : [];
+    const handleUpdateUtils = async (values) => {
+        const bookingUtils = values.utils !== null ? values.utils.map((item) => item.value) : [];
         const updatedBooking = {
             id: booking.id,
-            utilities: bookingUtils
+            utilities: bookingUtils,
         };
 
         try {
@@ -50,21 +49,21 @@ const ExtendBookingForm = props => {
             await updateUtilities(updatedBooking, token);
             history.push("/bookings");
         } catch (error) {
-            const err = JSON.parse(error.request.response);
-            alert(err.message);
+            const message = JSON.parse(error.request.response).message;
+            cogoToast.error(message);
         }
     };
 
-    const mapUtilsToSelectFromBooking = array =>
+    const mapUtilsToSelectFromBooking = (array) =>
         array.map(({ utility }) => ({
             value: utility.utilityType,
-            label: utility.utilityType
+            label: utility.utilityType,
         }));
 
-    const mapUtilsToSelect = array =>
-        array.map(item => ({
+    const mapUtilsToSelect = (array) =>
+        array.map((item) => ({
             value: item.utilityType,
-            label: item.utilityType
+            label: item.utilityType,
         }));
 
     const utilList = mapUtilsToSelect(utilities);
@@ -76,10 +75,7 @@ const ExtendBookingForm = props => {
                 <BookingDetails booking={booking} />
                 <Formik
                     initialValues={{
-                        endDate: moment
-                            .utc(booking.endDate)
-                            .local()
-                            .toDate()
+                        endDate: moment.utc(booking.endDate).local().toDate(),
                     }}
                     onSubmit={handleExtendBooking}
                     validationSchema={extendBookingSchema}
@@ -91,22 +87,22 @@ const ExtendBookingForm = props => {
                                 <div className={styles.datepicker__container}>
                                     <CustomDatePicker
                                         fieldName="startDate"
+                                        dateFormat="Pp"
                                         isDisabled={true}
-                                        selected={moment
-                                            .utc(booking.startDate)
-                                            .local()
-                                            .toDate()}
+                                        selected={moment.utc(booking.startDate).local().toDate()}
                                     />
                                     <div className={styles.separator} />
                                     <CustomDatePicker
                                         fieldName="endDate"
                                         isDisabled={booking.status !== "Confirmed"}
                                         selected={values.endDate}
+                                        showTimeSelect={true}
+                                        dateFormat="Pp"
                                         value={values.endDate}
                                         dateRange={booking.endDate}
                                         minHour={8}
                                         maxHour={16}
-                                        onSetFieldValue={val => setFieldValue("endDate", val)}
+                                        onSetFieldValue={(val) => setFieldValue("endDate", val)}
                                         onSetFieldTouched={() => setFieldTouched("endDate")}
                                     />
                                 </div>
@@ -124,7 +120,7 @@ const ExtendBookingForm = props => {
                 </Formik>
                 <Formik
                     initialValues={{
-                        utils: [...mapUtilsToSelectFromBooking(booking.bookingUtilities)]
+                        utils: [...mapUtilsToSelectFromBooking(booking.bookingUtilities)],
                     }}
                     onSubmit={handleUpdateUtils}
                 >
@@ -138,7 +134,7 @@ const ExtendBookingForm = props => {
                                         value={values.utils}
                                         isMulti={true}
                                         isDisabled={booking.status !== "Confirmed"}
-                                        onSetFieldValue={value => setFieldValue("utils", value)}
+                                        onSetFieldValue={(value) => setFieldValue("utils", value)}
                                         onSetFieldTouched={() => {
                                             setFieldTouched("utils");
                                         }}

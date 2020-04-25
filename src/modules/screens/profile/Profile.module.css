@@ -1,36 +1,14 @@
 .container {
-  width: 70%;
-  margin: 3% auto;
+    width: 60%;
+    margin: 3% auto;
 }
 
-.profile__div {
-  margin: 2%;
-}
-
-.documents__div {
-  margin: 2%;
-}
-
-.form__div {
-  border: 1px solid #cccccc;
-  margin: 2% 0;
-  /* box-shadow: 0 2px 4px 0 gray; */
-  padding: 4%;
-}
-
-.image__div {
-  margin: 2% 0;
-}
-
-.img {
-  margin: 10px;
-  width: 300px;
-  box-shadow: 0 2px 4px 0 gray;
-  padding: 8px;
+.documentList__div {
+    margin: 5% 0;
 }
 
 @media (max-width: 900px) {
-  .container {
-    width: 100%;
-  }
+    .container {
+        width: 100%;
+    }
 }

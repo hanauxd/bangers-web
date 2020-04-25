@@ -1,12 +1,12 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { MDBCardImage, MDBCardFooter, MDBIcon } from "mdbreact";
+import { MDBCardFooter, MDBIcon } from "mdbreact";
 
 import { currency } from "../../../helpers/CurrencyFormatter";
 
 import styles from "./VehicleItem.module.css";
 
-const VehicleItem = props => {
+const VehicleItem = (props) => {
     const history = useHistory();
     const { id, brand, model, fuelType, transmissionType, price, vehicleImages } = props.vehicle;
 
@@ -17,10 +17,10 @@ const VehicleItem = props => {
     return (
         <div className={styles.container}>
             <div className={styles.image__div} onClick={handleViewVehicle}>
-                <MDBCardImage
-                    className="img-fluid"
+                <img
+                    className={styles.img}
                     src={`http://localhost:8080/vehicles/images/download/${vehicleImages[0].filename}`}
-                    waves
+                    alt=""
                 />
             </div>
             <h3>
