@@ -53,7 +53,7 @@ const BlacklistedUsers = (props) => {
             <div className={styles.blacklistedUser} key={user.id}>
                 <div className={styles.blacklistedUser__block}>
                     <span>Customer Name</span>
-                    {user.firstName} {user.lastName}
+                    {user.fullName}
                 </div>
                 <div className={styles.blacklistedUser__block}>
                     <span>Email</span>

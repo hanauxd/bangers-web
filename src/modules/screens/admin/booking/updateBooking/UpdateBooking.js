@@ -70,7 +70,7 @@ const UpdateBooking = (props) => {
             history.push("/admin/bookings");
         } catch (error) {
             const msg = JSON.parse(error.request.response);
-            cogoToast.error(msg);
+            cogoToast.error(msg.message);
         }
     };
 
@@ -106,7 +106,11 @@ const UpdateBooking = (props) => {
                                 </div>
                                 <MDBBtn
                                     disabled={
-                                        booking.status === "Returned" || booking.status === "Failed" ? true : false
+                                        booking.status === "Returned" ||
+                                        booking.status === "Failed" ||
+                                        booking.status === "Refused"
+                                            ? true
+                                            : false
                                     }
                                     className={styles.update__btn}
                                     type="submit"
