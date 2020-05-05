@@ -3,14 +3,21 @@ import { connect } from "react-redux";
 import cogoToast from "cogo-toast";
 
 import { useCustomState } from "./../../helpers/hooks";
-import { onFetchUser, onUploadUserDocuments, onDeleteUserDocument, onUploadProfileImage } from "../../api/user";
+import {
+    onFetchUser,
+    onUploadUserDocuments,
+    onDeleteUserDocument,
+    onUploadProfileImage,
+    onGetUserDocuments,
+} from "../../api/user";
 import { Profile as ProfileDetails, UserDocument, UserDocumentItem, Spinner } from "./../../components";
 
 import styles from "./Profile.module.css";
 
 const Profile = (props) => {
     const [state, setState] = useCustomState({
-        loading: true,
+        loadingUser: true,
+        loadingDocs: true,
         error: null,
         user: null,
         documentList: [],
@@ -19,21 +26,38 @@ const Profile = (props) => {
 
     useEffect(() => {
         fetchUserDetails();
+        fetchUserDocuments();
         //eslint-disable-next-line
     }, []);
+
+    const fetchUserDocuments = async () => {
+        try {
+            const token = props.auth.jwt;
+            const userId = props.auth.userId;
+            const result = await onGetUserDocuments(token, userId);
+            setState({
+                loadingDocs: false,
+                documentList: [...result],
+            });
+        } catch (error) {
+            setState({
+                loadingDocs: false,
+                error: error.message,
+            });
+        }
+    };
 
     const fetchUserDetails = async () => {
         try {
             const token = props.auth.jwt;
             const result = await onFetchUser(token);
             setState({
-                loading: false,
+                loadingUser: false,
                 user: { ...result },
-                documentList: [...result.documents],
             });
         } catch (error) {
             setState({
-                loading: false,
+                loadingUser: false,
                 error: error.message,
             });
         }
@@ -119,7 +143,7 @@ const Profile = (props) => {
         );
     };
 
-    return state.loading ? <Spinner /> : state.error ? renderError() : renderUserProfile();
+    return state.loadingUser || state.loadingDocs ? <Spinner /> : state.error ? renderError() : renderUserProfile();
 };
 
 const mapStateToProps = (state) => {
