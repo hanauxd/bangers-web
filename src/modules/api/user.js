@@ -45,3 +45,8 @@ export const onUnblockUser = (userId, token) => {
     const endpoint = `users/blacklist/${userId}`;
     return post(endpoint, null, token);
 };
+
+export const onGetUserDocuments = (token, userId) => {
+    const endpoint = `user-documents/user/${userId}`;
+    return get(endpoint, token);
+};
