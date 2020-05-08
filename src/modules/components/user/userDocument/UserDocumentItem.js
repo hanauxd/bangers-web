@@ -7,7 +7,7 @@ import { useCustomState } from "./../../../helpers/hooks";
 import styles from "./UserDocumentItem.module.css";
 
 const UserDocumentItem = (props) => {
-    const { id, filename, type, dateIssued } = props.document;
+    const { id, filename, type, issueDate } = props.document;
     const { removeDocument } = props;
     const [state, setState] = useCustomState({
         modal: "",
@@ -33,7 +33,7 @@ const UserDocumentItem = (props) => {
     return (
         <div className={styles.container}>
             {attribute("TYPE", type)}
-            {attribute("ISSUE DATE", moment(dateIssued).format("DD MMMM YYYY"))}
+            {attribute("ISSUE DATE", moment.utc(issueDate).local().format("DD MMMM YYYY"))}
             <div>
                 <MDBBtn size="sm" color="mdb-color darken-3" onClick={() => toggle(id)}>
                     View
