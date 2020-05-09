@@ -3,25 +3,26 @@ import { withRouter, useHistory } from "react-router-dom";
 import { Carousel } from "react-responsive-carousel";
 import { MDBTable, MDBTableBody, MDBBtn } from "mdbreact";
 
-import { currency } from "./../../../helpers/CurrencyFormatter";
-import { useCustomState } from "./../../../helpers/hooks";
+import { currency } from "../../../helpers/CurrencyFormatter";
+import { useCustomState } from "../../../helpers/hooks";
+import { VEHICLE_PLACEHOLDER } from "../../../helpers/Constant";
 import { fetchVehicleDetails as fetchVehicleFromApi } from "../../../api/vehicle";
 import { Spinner } from "../../index";
 
 import styles from "./VehicleDetails.module.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
-const VehicleDetails = props => {
+const VehicleDetails = (props) => {
     const history = useHistory();
     const {
         match: {
-            params: { id }
-        }
+            params: { id },
+        },
     } = props;
     const [state, setState] = useCustomState({
         loading: true,
         error: null,
-        vehicle: null
+        vehicle: null,
     });
 
     useEffect(() => {
@@ -34,12 +35,12 @@ const VehicleDetails = props => {
             const result = await fetchVehicleFromApi(id);
             setState({
                 loading: false,
-                vehicle: { ...result }
+                vehicle: { ...result },
             });
         } catch (error) {
             setState({
                 loading: false,
-                error: error.message
+                error: error.message,
             });
         }
     };
@@ -48,8 +49,8 @@ const VehicleDetails = props => {
         history.push("/", {
             vehicleId: {
                 value: id,
-                label: `${state.vehicle.brand} ${state.vehicle.model}`
-            }
+                label: `${state.vehicle.brand} ${state.vehicle.model}`,
+            },
         });
     };
 
@@ -58,13 +59,21 @@ const VehicleDetails = props => {
     };
 
     const renderVehicleDetails = () => {
-        const images = state.vehicle.vehicleImages.map(image => {
-            return (
-                <div key={image.id}>
-                    <img alt="" src={`http://localhost:8080/vehicles/images/download/${image.filename}`} />.
-                </div>
+        const vehicleImages = state.vehicle.vehicleImages;
+        const images =
+            vehicleImages.length > 0 ? (
+                vehicleImages.map((image) => {
+                    return (
+                        <img
+                            key={image.id}
+                            alt=""
+                            src={`http://localhost:8080/vehicles/images/download/${image.filename}`}
+                        />
+                    );
+                })
+            ) : (
+                <img alt="" src={VEHICLE_PLACEHOLDER} />
             );
-        });
 
         return (
             <div className={styles.root}>
