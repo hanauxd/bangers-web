@@ -82,6 +82,7 @@ const UserDocument = (props) => {
                                 fieldName="dateIssued"
                                 placeholderText="Pick document issue date"
                                 showTimeSelect={false}
+                                maxDate={new Date()}
                                 value={values.dateIssued}
                                 selected={values.dateIssued}
                                 onSetFieldValue={(value) => setFieldValue("dateIssued", value)}

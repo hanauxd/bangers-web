@@ -99,7 +99,8 @@ const ExtendBookingForm = (props) => {
                                         showTimeSelect={true}
                                         dateFormat="Pp"
                                         value={values.endDate}
-                                        dateRange={booking.endDate}
+                                        minDate={booking.endDate}
+                                        maxDate={booking.endDate}
                                         minHour={8}
                                         maxHour={16}
                                         onSetFieldValue={(val) => setFieldValue("endDate", val)}

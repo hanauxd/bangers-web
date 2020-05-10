@@ -167,6 +167,7 @@ const Booking = (props) => {
                                                 selected={values.startDate}
                                                 dateFormat="Pp"
                                                 showTimeSelect={true}
+                                                minDate={new Date()}
                                                 minHour={8}
                                                 maxHour={18}
                                                 onSetFieldValue={(value) => setFieldValue("startDate", value)}
@@ -183,6 +184,7 @@ const Booking = (props) => {
                                                 dateFormat="Pp"
                                                 minHour={8}
                                                 maxHour={18}
+                                                minDate={new Date()}
                                                 onSetFieldValue={(value) => setFieldValue("endDate", value)}
                                                 onSetFieldTouched={() => setFieldTouched("endDate")}
                                             />
