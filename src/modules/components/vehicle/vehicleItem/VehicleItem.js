@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { MDBCardFooter, MDBIcon } from "mdbreact";
 
 import { currency } from "../../../helpers/CurrencyFormatter";
+import { VEHICLE_PLACEHOLDER } from "../../../helpers/Constant";
 
 import styles from "./VehicleItem.module.css";
 
@@ -19,7 +20,11 @@ const VehicleItem = (props) => {
             <div className={styles.image__div} onClick={handleViewVehicle}>
                 <img
                     className={styles.img}
-                    src={`http://localhost:8080/vehicles/images/download/${vehicleImages[0].filename}`}
+                    src={
+                        vehicleImages.length > 0
+                            ? `http://localhost:8080/vehicles/images/download/${vehicleImages[0].filename}`
+                            : VEHICLE_PLACEHOLDER
+                    }
                     alt=""
                 />
             </div>

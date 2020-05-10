@@ -119,7 +119,7 @@ const Profile = (props) => {
     };
 
     const renderUserProfile = () => {
-        const imageList = state.documentList.map((doc) => (
+        const docList = state.documentList.map((doc) => (
             <UserDocumentItem removeDocument={handleRemoveDocument} key={doc.id} document={doc} />
         ));
 
@@ -134,7 +134,7 @@ const Profile = (props) => {
                 </div>
                 <div className={styles.documentList__div}>
                     {state.documentList.length > 0 ? (
-                        <div style={{ display: "flex", flexDirection: "column" }}>{imageList.reverse()}</div>
+                        <div style={{ display: "flex", flexDirection: "column" }}>{docList}</div>
                     ) : (
                         <div>No Documents</div>
                     )}
