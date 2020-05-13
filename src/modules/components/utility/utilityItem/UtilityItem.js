@@ -32,9 +32,9 @@ const UtilityItem = (props) => {
         quantity: Yup.number().min(1, "Quantity cannot be less than 1.").required("Quantity is required."),
     });
 
-    const handleUpdate = (values) => {
+    const handleUpdate = (values, { resetForm }) => {
         values.utilityType = utilityType;
-        handleUpdateUtility(values);
+        handleUpdateUtility(values, resetForm);
         toggle();
     };
 

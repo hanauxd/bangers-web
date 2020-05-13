@@ -39,7 +39,7 @@ const AddVehicle = (props) => {
         files: Yup.array().required("Files required."),
     });
 
-    const handleAddVehicle = (values) => {
+    const handleAddVehicle = (values, { resetForm }) => {
         const vehicle = {
             license: values.license,
             description: values.description,
@@ -52,7 +52,7 @@ const AddVehicle = (props) => {
             price: values.price,
         };
         const files = values.files;
-        props.onAddVehicle(vehicle, files);
+        props.onAddVehicle(vehicle, files, resetForm);
     };
 
     return (

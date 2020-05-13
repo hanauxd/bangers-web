@@ -18,8 +18,8 @@ const AddUtility = (props) => {
         quantity: Yup.number().min(1, "Quantity cannot be less than 1.").required("Quantity is required."),
     });
 
-    const handleAddUtility = (values) => {
-        props.handleAddUtility(values);
+    const handleAddUtility = (values, { resetForm }) => {
+        props.handleAddUtility(values, resetForm);
     };
 
     return (

@@ -35,24 +35,26 @@ const Utility = (props) => {
         }
     };
 
-    const addUtility = async (values) => {
+    const addUtility = async (values, resetFormCallback) => {
         try {
             const result = await onAddUtility(values, props.auth.jwt);
             setState({
                 utilities: [...result],
             });
+            resetFormCallback({});
         } catch (error) {
             const message = JSON.parse(error.request.response).message;
             cogoToast.error(message);
         }
     };
 
-    const updateUtility = async (values) => {
+    const updateUtility = async (values, resetFormCallback) => {
         try {
             const result = await onUpdateUtility(values, props.auth.jwt);
             setState({
                 utilities: [...result],
             });
+            resetFormCallback({});
         } catch (error) {
             const message = JSON.parse(error.request.response).message;
             cogoToast.error(message);

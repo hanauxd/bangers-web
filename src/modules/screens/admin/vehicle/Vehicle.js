@@ -35,13 +35,14 @@ const Vehicle = (props) => {
         }
     };
 
-    const handleAddVehicle = async (vehicle, files) => {
+    const handleAddVehicle = async (vehicle, files, resetFormCallback) => {
         try {
             const token = props.auth.jwt;
             const result = await addVehicle(vehicle, files, token);
             setState({
                 vehicles: [...result],
             });
+            resetFormCallback({});
         } catch (error) {
             const message = JSON.parse(error.request.response).message;
             cogoToast.error(message);
