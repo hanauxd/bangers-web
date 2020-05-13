@@ -6,7 +6,7 @@ import { MDBTable, MDBTableBody, MDBBtn } from "mdbreact";
 import { currency } from "../../../helpers/CurrencyFormatter";
 import { useCustomState } from "../../../helpers/hooks";
 import { VEHICLE_PLACEHOLDER } from "../../../helpers/Constant";
-import { fetchVehicleDetails as fetchVehicleFromApi } from "../../../api/vehicle";
+import { fetchVehicleDetails as fetchVehicleFromApi, fetchAverageExternalRate } from "../../../api/vehicle";
 import { Spinner } from "../../index";
 
 import styles from "./VehicleDetails.module.css";
@@ -23,6 +23,7 @@ const VehicleDetails = (props) => {
         loading: true,
         error: null,
         vehicle: null,
+        discount: 0,
     });
 
     useEffect(() => {
@@ -33,6 +34,7 @@ const VehicleDetails = (props) => {
     const fetchVehicleDetails = async () => {
         try {
             const result = await fetchVehicleFromApi(id);
+            fetchAvgExtRate(result);
             setState({
                 loading: false,
                 vehicle: { ...result },
@@ -43,6 +45,14 @@ const VehicleDetails = (props) => {
                 error: error.message,
             });
         }
+    };
+
+    const fetchAvgExtRate = async (vehicle) => {
+        const result = await fetchAverageExternalRate(vehicle.brand + " " + vehicle.model);
+        const discount = Math.round(((result - vehicle.price) / vehicle.price) * 100);
+        setState({
+            discount: discount,
+        });
     };
 
     const handleBookVehicle = () => {
@@ -83,6 +93,9 @@ const VehicleDetails = (props) => {
                         <Carousel>{images}</Carousel>
                     </div>
                     <div className={styles.content__div}>
+                        {state.discount > 0 ? (
+                            <div className={styles.discount}>{`*Book with us today and save ${state.discount}%`}</div>
+                        ) : null}
                         <div className={styles.price__div}>
                             <h4>{currency.format(state.vehicle.price)}</h4>
                             <span>/DAILY</span>

@@ -56,6 +56,11 @@
     margin: 0 !important;
 }
 
+.discount {
+    color: red;
+    font-size: 0.8rem;
+}
+
 @media (max-width: 900px) {
     .container {
         flex-flow: wrap column;
