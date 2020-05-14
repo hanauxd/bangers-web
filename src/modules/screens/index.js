@@ -8,3 +8,4 @@ export { default as BookingHistory } from "./bookingHistory/BookingHistory";
 export { default as Booking } from "./admin/booking/Booking";
 export { default as UpdateBooking } from "./admin/booking/updateBooking/UpdateBooking";
 export { default as BlacklistedUsers } from "./admin/blacklistedUsers/BlacklistedUsers";
+export { default as Fleet } from "./fleet/Fleet";
