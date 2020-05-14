@@ -13,7 +13,7 @@ import {
     MDBDropdownToggle,
     MDBDropdownMenu,
     MDBDropdownItem,
-    MDBIcon
+    MDBIcon,
 } from "mdbreact";
 
 import { useCustomState } from "./../../helpers/hooks";
@@ -21,10 +21,10 @@ import { logoutSuccess } from "../../store/actions/auth";
 
 import styles from "./Toolbar.module.css";
 
-const Toolbar = props => {
+const Toolbar = (props) => {
     const history = useHistory();
     const [state, setState] = useCustomState({
-        isOpen: false
+        isOpen: false,
     });
 
     const handleLogout = () => {
@@ -47,7 +47,7 @@ const Toolbar = props => {
 
     const toggleCollapse = () => {
         setState({
-            isOpen: !state.isOpen
+            isOpen: !state.isOpen,
         });
     };
 
@@ -63,6 +63,11 @@ const Toolbar = props => {
                     <MDBNavItem>
                         <MDBNavLink activeClassName={styles.activeClass} to="/vehicles">
                             Vehicle
+                        </MDBNavLink>
+                    </MDBNavItem>
+                    <MDBNavItem>
+                        <MDBNavLink activeClassName={styles.activeClass} to="/fleet-comparison">
+                            Fleet Comparison
                         </MDBNavLink>
                     </MDBNavItem>
                 </MDBNavbarNav>
@@ -96,6 +101,11 @@ const Toolbar = props => {
                             Vehicle
                         </MDBNavLink>
                     </MDBNavItem>
+                    <MDBNavItem>
+                        <MDBNavLink activeClassName={styles.activeClass} to="/fleet-comparison">
+                            Fleet Comparison
+                        </MDBNavLink>
+                    </MDBNavItem>
                 </MDBNavbarNav>
                 <MDBNavbarNav right>
                     <MDBNavItem>
@@ -127,6 +137,11 @@ const Toolbar = props => {
                     <MDBNavItem>
                         <MDBNavLink activeClassName={styles.activeClass} to="/vehicles">
                             Vehicle
+                        </MDBNavLink>
+                    </MDBNavItem>
+                    <MDBNavItem>
+                        <MDBNavLink activeClassName={styles.activeClass} to="/fleet-comparison">
+                            Fleet Comparison
                         </MDBNavLink>
                     </MDBNavItem>
                     <MDBNavItem>
@@ -171,17 +186,17 @@ const Toolbar = props => {
     );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
-        auth: state.auth.auth
+        auth: state.auth.auth,
     };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
     return {
         onLogout: () => {
             dispatch(logoutSuccess());
-        }
+        },
     };
 };
 
