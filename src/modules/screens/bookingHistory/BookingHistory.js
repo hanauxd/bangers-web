@@ -7,11 +7,11 @@ import { BookingHistoryList, Spinner } from "../../components/index";
 
 import styles from "./BookingHistory.module.css";
 
-const BookingHistory = props => {
+const BookingHistory = (props) => {
     const [state, setState] = useCustomState({
         loading: true,
         error: null,
-        bookings: []
+        bookings: [],
     });
 
     const { loading, error, bookings } = state;
@@ -28,18 +28,18 @@ const BookingHistory = props => {
             const result = await fetchBookings(userId, token);
             setState({
                 loading: false,
-                bookings: [...result]
+                bookings: [...result],
             });
         } catch (error) {
             setState({
                 loading: false,
-                error: error.message
+                error: JSON.parse(error.request.response).message,
             });
         }
     };
 
     const renderError = () => {
-        return <div>{state.error}</div>;
+        return <h3 className={styles.errorContainer}>{state.error}</h3>;
     };
 
     const renderBookingHistory = () => {
@@ -54,9 +54,9 @@ const BookingHistory = props => {
     return loading ? <Spinner /> : error ? renderError() : renderBookingHistory();
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
-        auth: state.auth.auth
+        auth: state.auth.auth,
     };
 };
 
