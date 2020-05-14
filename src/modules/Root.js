@@ -15,6 +15,7 @@ import {
     Booking,
     UpdateBooking,
     BlacklistedUsers,
+    Fleet,
 } from "./screens";
 
 import styles from "./Root.module.css";
@@ -50,6 +51,9 @@ const Root = (props) => {
                     </Route>
                     <Route exact path="/vehicles/:id">
                         <VehicleDetails />
+                    </Route>
+                    <Route exact path="/fleet-comparison">
+                        <Fleet />
                     </Route>
                     <Route exact path="/profile">
                         <Auth component={Profile} auth={props.auth} role="ROLE_USER" />

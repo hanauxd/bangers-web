@@ -13,7 +13,7 @@ const InputField = (props) => {
                 name={name}
                 onChange={onChange}
                 onBlur={onBlur}
-                values={values.name}
+                value={values}
                 icon={icon}
                 label={label}
                 outline

@@ -24,3 +24,8 @@ export const fetchAverageExternalRate = (vehicle) => {
     const endpoint = `external-rates/${vehicle}`;
     return get(endpoint);
 };
+
+export const fetchFleetComparison = () => {
+    const endpoint = "external-rates/our-rates";
+    return get(endpoint);
+};
