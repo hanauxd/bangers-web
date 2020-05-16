@@ -1,18 +1,34 @@
 import React from "react";
+import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { MDBBtn } from "mdbreact";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import * as moment from "moment";
-import { MDBBtn } from "mdbreact";
 import cogoToast from "cogo-toast";
 
-import { onSignUp } from "../../api/auth";
+import { authSuccess } from "../../store/actions/auth";
+import { onSignUp, onSignIn } from "../../api/auth";
 import { InputField, BirthDatePicker } from "../../components";
 
 import styles from "./SignUp.module.css";
 
 const SignUp = (props) => {
     const history = useHistory();
+
+    const {
+        location: { state },
+    } = history;
+
+    const routeTo = (endpoint) => {
+        if (state && state.vehicleId) {
+            history.push(endpoint, {
+                ...state,
+            });
+        } else {
+            history.push(endpoint);
+        }
+    };
 
     const initialValues = {
         fullName: "",
@@ -52,17 +68,16 @@ const SignUp = (props) => {
                 role: "ROLE_USER",
             };
             await onSignUp(user);
-            history.push("/");
+            const result = await onSignIn({ username: email, password });
+            localStorage.setItem("auth", JSON.stringify(result));
+            props.onSuccess({ ...result });
+            routeTo("/");
         } catch (error) {
             if (error.request) {
                 const err = JSON.parse(error.request.response);
                 cogoToast.error(err.message);
             }
         }
-    };
-
-    const handleLogin = () => {
-        history.replace("/login");
     };
 
     return (
@@ -164,7 +179,7 @@ const SignUp = (props) => {
                                     </MDBBtn>
                                     <div className={styles.signInText}>
                                         <span>Already have an account? </span>
-                                        <span onClick={handleLogin} className={styles.signInLink}>
+                                        <span onClick={() => routeTo("/login")} className={styles.signInLink}>
                                             Login
                                         </span>
                                     </div>
@@ -183,4 +198,18 @@ const SignUp = (props) => {
     );
 };
 
-export default SignUp;
+const mapStateToProps = (state) => {
+    return {
+        auth: state.auth.auth,
+    };
+};
+
+const mapDispactToProps = (dispatch) => {
+    return {
+        onSuccess: (authData) => {
+            dispatch(authSuccess(authData));
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispactToProps)(SignUp);
