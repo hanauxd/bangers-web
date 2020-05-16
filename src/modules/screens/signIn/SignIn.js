@@ -15,6 +15,20 @@ import styles from "./SignIn.module.css";
 const SignIn = (props) => {
     const history = useHistory();
 
+    const {
+        location: { state },
+    } = history;
+
+    const routeTo = (endpoint) => {
+        if (state && state.vehicleId) {
+            history.push(endpoint, {
+                ...state,
+            });
+        } else {
+            history.push(endpoint);
+        }
+    };
+
     const initialValues = {
         username: "",
         password: "",
@@ -31,23 +45,10 @@ const SignIn = (props) => {
             const result = await onSignIn({ username, password });
             localStorage.setItem("auth", JSON.stringify(result));
             props.onSuccess({ ...result });
-            const {
-                location: { state },
-            } = history;
-            if (state && state.vehicleId) {
-                history.push("/", {
-                    ...state,
-                });
-            } else {
-                history.push("/");
-            }
+            routeTo("/");
         } catch (error) {
             cogoToast.error("Failed to sign in.");
         }
-    };
-
-    const handleRegister = () => {
-        history.replace("/register");
     };
 
     return (
@@ -86,7 +87,7 @@ const SignIn = (props) => {
                                     </MDBBtn>
                                     <div className={styles.signUpText}>
                                         <span>Don't have an account? </span>
-                                        <span onClick={handleRegister} className={styles.signUpLink}>
+                                        <span onClick={() => routeTo("/register")} className={styles.signUpLink}>
                                             Create
                                         </span>
                                     </div>

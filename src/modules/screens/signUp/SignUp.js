@@ -1,24 +1,41 @@
 import React from "react";
+import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
 import { MDBBtn } from "mdbreact";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import * as moment from "moment";
 import cogoToast from "cogo-toast";
 
-import { onSignUp } from "../../api/auth";
-import { InputField } from "../../components";
+import { authSuccess } from "../../store/actions/auth";
+import { onSignUp, onSignIn } from "../../api/auth";
+import { InputField, BirthDatePicker } from "../../components";
 
 import styles from "./SignUp.module.css";
 
 const SignUp = (props) => {
     const history = useHistory();
 
+    const {
+        location: { state },
+    } = history;
+
+    const routeTo = (endpoint) => {
+        if (state && state.vehicleId) {
+            history.push(endpoint, {
+                ...state,
+            });
+        } else {
+            history.push(endpoint);
+        }
+    };
+
     const initialValues = {
         fullName: "",
         phone: "",
         email: "",
         password: "",
-        dob: "",
+        dob: new Date(),
         address: "",
         nic: "",
         license: "",
@@ -26,10 +43,10 @@ const SignUp = (props) => {
 
     const signUpSchema = Yup.object().shape({
         fullName: Yup.string().required("Name is required."),
-        phone: Yup.string().required("Phone is required."),
+        phone: Yup.number().positive().integer().required("Phone is required."),
         email: Yup.string().email("Invalid email address.").required("Email is required."),
         password: Yup.string().required("Password is required."),
-        dob: Yup.string().required("Date of birth is required."),
+        dob: Yup.date().required("Date of birth is required."),
         address: Yup.string().required("Address is required."),
         nic: Yup.string().required("NIC is required."),
         license: Yup.string().required("License number is required"),
@@ -37,8 +54,9 @@ const SignUp = (props) => {
 
     const handleSignUp = async (values) => {
         try {
-            const { fullName, phone, email, password, dob, address, nic, license } = values;
-            await onSignUp({
+            const { fullName, phone, email, password, address, nic, license } = values;
+            const dob = moment(values.dob).format("DD-MM-YYYY");
+            const user = {
                 fullName,
                 phone,
                 email,
@@ -48,17 +66,18 @@ const SignUp = (props) => {
                 nic,
                 license,
                 role: "ROLE_USER",
-            });
-            history.push("/login");
+            };
+            await onSignUp(user);
+            const result = await onSignIn({ username: email, password });
+            localStorage.setItem("auth", JSON.stringify(result));
+            props.onSuccess({ ...result });
+            routeTo("/");
         } catch (error) {
-            if (error.request.status === 400) {
-                cogoToast.error("Email address already exist.");
+            if (error.request) {
+                const err = JSON.parse(error.request.response);
+                cogoToast.error(err.message);
             }
         }
-    };
-
-    const handleLogin = () => {
-        history.replace("/login");
     };
 
     return (
@@ -109,7 +128,7 @@ const SignUp = (props) => {
                                     <InputField
                                         icon="phone"
                                         label="Phone"
-                                        type="text"
+                                        type="number"
                                         name="phone"
                                         onChange={handleChange}
                                         onBlur={handleBlur}
@@ -141,16 +160,7 @@ const SignUp = (props) => {
                                     />
                                 </div>
                                 <div style={{ display: "flex" }}>
-                                    <InputField
-                                        icon="calendar-alt"
-                                        label="Date of Birth"
-                                        type="text"
-                                        name="dob"
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        values={values.dob}
-                                        styleClass={{ flex: 1 }}
-                                    />
+                                    <Field name="dob" component={BirthDatePicker} />
                                     <div style={{ width: "25px" }} />
                                     <InputField
                                         icon="lock"
@@ -169,7 +179,7 @@ const SignUp = (props) => {
                                     </MDBBtn>
                                     <div className={styles.signInText}>
                                         <span>Already have an account? </span>
-                                        <span onClick={handleLogin} className={styles.signInLink}>
+                                        <span onClick={() => routeTo("/login")} className={styles.signInLink}>
                                             Login
                                         </span>
                                     </div>
@@ -188,4 +198,18 @@ const SignUp = (props) => {
     );
 };
 
-export default SignUp;
+const mapStateToProps = (state) => {
+    return {
+        auth: state.auth.auth,
+    };
+};
+
+const mapDispactToProps = (dispatch) => {
+    return {
+        onSuccess: (authData) => {
+            dispatch(authSuccess(authData));
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispactToProps)(SignUp);

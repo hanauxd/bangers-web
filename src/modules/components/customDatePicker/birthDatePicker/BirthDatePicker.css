@@ -1,0 +1,8 @@
+.MuiOutlinedInput-input {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.MuiOutlinedInput-adornedEnd {
+    padding: 0px !important;
+}
