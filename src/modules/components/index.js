@@ -19,3 +19,4 @@ export { default as CustomSelect } from "./customSelect/CustomSelect";
 export { default as Spinner } from "./spinner/Spinner";
 export { default as BookingDetails } from "./booking/bookingDetails/BookingDetails";
 export { default as FleetComparison } from "./vehicle/fleetComparison/FleetComparison";
+export { default as BirthDatePicker } from "./customDatePicker/birthDatePicker/BirthDatePicker";
