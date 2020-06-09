@@ -40,13 +40,16 @@ const SignIn = (props) => {
     });
 
     const handleSignIn = async (values) => {
+        const { hide } = cogoToast.loading("Signing in");
         try {
             const { username, password } = values;
             const result = await onSignIn({ username, password });
             localStorage.setItem("auth", JSON.stringify(result));
             props.onSuccess({ ...result });
+            hide();
             routeTo("/");
         } catch (error) {
+            hide();
             cogoToast.error("Failed to sign in.");
         }
     };
