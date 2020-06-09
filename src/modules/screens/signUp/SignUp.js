@@ -53,6 +53,7 @@ const SignUp = (props) => {
     });
 
     const handleSignUp = async (values) => {
+        const { hide } = cogoToast.loading("Signing up");
         try {
             const { fullName, phone, email, password, address, nic, license } = values;
             const dob = moment(values.dob).format("DD-MM-YYYY");
@@ -71,9 +72,11 @@ const SignUp = (props) => {
             const result = await onSignIn({ username: email, password });
             localStorage.setItem("auth", JSON.stringify(result));
             props.onSuccess({ ...result });
+            hide();
             routeTo("/");
         } catch (error) {
             if (error.request) {
+                hide();
                 const err = JSON.parse(error.request.response);
                 cogoToast.error(err.message);
             }
